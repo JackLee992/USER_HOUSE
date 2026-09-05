@@ -1,3 +1,4 @@
+import {createPinballRenderer} from './pinball-renderer.js';
 const W=420,H=680,R=8,STEP=1/240;
 const BUMPERS=[{x:140,y:230,r:24},{x:270,y:230,r:24},{x:205,y:320,r:27}];
 const TARGETS=[{x:85,y:145,r:13},{x:205,y:115,r:13},{x:325,y:145,r:13}];
@@ -44,18 +45,9 @@ export function createPinballGame(env,state){
  function on(target,type,fn,opts){target.addEventListener(type,fn,opts);cleanups.push(()=>target.removeEventListener(type,fn,opts));}
  root.querySelectorAll('[data-action]').forEach(button=>{const a=button.dataset.action;on(button,'pointerdown',e=>{e.preventDefault();button.setPointerCapture?.(e.pointerId);press(a);button.classList.add('pb-held');});on(button,'pointerup',e=>{e.preventDefault();release(a);button.classList.remove('pb-held');});on(button,'pointercancel',()=>{if(a==='launch'){charging=false;charge=0;}else input[a]=false;button.classList.remove('pb-held');});on(button,'lostpointercapture',()=>{if(a==='launch'){charging=false;charge=0;}else input[a]=false;button.classList.remove('pb-held');});});
  const key=e=>({ArrowLeft:'left',ArrowRight:'right',Space:'launch'}[e.code]);on(win,'keydown',e=>{const a=key(e);if(a&&active()){e.preventDefault();if(!e.repeat)press(a);}});on(win,'keyup',e=>{const a=key(e);if(a){if(active())e.preventDefault();release(a);}});on(win,'blur',clearInput);on(doc,'visibilitychange',clearInput);
- function path(points,color,width=1){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.stroke();}
- function circle(x,y,r,fill,stroke){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}}
+ const renderer=createPinballRenderer(canvas,ctx,doc,win,{walls:WALLS,bumpers:BUMPERS,targets:TARGETS});
  function draw(){
-  ctx.clearRect(0,0,W,H);ctx.fillStyle='#050c13';ctx.fillRect(16,40,398,630);const bg=ctx.createLinearGradient(0,55,0,665);bg.addColorStop(0,'#18374a');bg.addColorStop(1,'#091a29');ctx.fillStyle=bg;ctx.beginPath();ctx.moveTo(85,50);ctx.lineTo(350,50);ctx.lineTo(410,100);ctx.lineTo(410,650);ctx.lineTo(30,650);ctx.lineTo(30,100);ctx.closePath();ctx.fill();
-  for(let y=120;y<610;y+=42)path([[45,y],[360,y]],'#20404d',1);for(let x=65;x<365;x+=42)path([[205+(x-205)*.65,75],[x,630]],'#20404d',1);
-  ctx.textAlign='center';ctx.fillStyle='#b6e7ee';ctx.font='bold 23px monospace';ctx.fillText('STAR HARBOR',205,405);ctx.font='10px monospace';ctx.fillStyle='#6699aa';ctx.fillText('星 港 · ORBITAL ARCADE',205,425);
-  WALLS.forEach(w=>{path([[w[0]+2,w[1]+6],[w[2]+2,w[3]+6]],'#01060b',13);path([[w[0],w[1]],[w[2],w[3]]],'#35596b',9);path([[w[0]-1,w[1]-2],[w[2]-1,w[3]-2]],'#8eabb9',2);});
-  [...BUMPERS,...TARGETS].forEach((p,i)=>{circle(p.x+3,p.y+7,p.r+3,'#0009');circle(p.x,p.y,p.r+3,'#152b3e','#6d8c9d');circle(p.x,p.y-3,p.r-2,s.lights[i]?'#fff7b0':i<3?'#23aeca':'#dba451',s.lights[i]?'#fff':'#b3f5ff');circle(p.x-5,p.y-9,p.r*.25,'#ffffff65');ctx.fillStyle='#123145';ctx.font='bold 12px monospace';ctx.fillText(i<3?'100':'250',p.x,p.y+1);});
-  [[105,175,s.left],[295,225,s.right]].forEach(([x,tip,up])=>{path([[x+2,552],[tip+2,577-65*up]],'#000b',22);path([[x,545],[tip,570-65*up]],'#ac692f',20);path([[x,542],[tip,567-65*up]],'#ffd278',13);circle(x,543,6,'#b5c9cc','#445661');});
-  path([[382,635],[398,635]],'#e8c46b',6);ctx.fillStyle='#e8c46b';ctx.fillRect(385,610+charge*15,10,18);ctx.fillStyle='#02070b';ctx.fillRect(170,643,60,12);ctx.fillStyle='#6ba1b5';ctx.font='10px monospace';ctx.fillText('DRAIN',200,661);
-  const b=s.ball;circle(b.x+3,b.y+5,R+1,'#0009');const metal=ctx.createRadialGradient(b.x-3,b.y-4,1,b.x,b.y,R);metal.addColorStop(0,'white');metal.addColorStop(.3,'#edf8ff');metal.addColorStop(.65,'#9faeba');metal.addColorStop(1,'#344958');circle(b.x,b.y,R,metal);
-  if(s.phase==='ready'){ctx.fillStyle='#07121bce';ctx.fillRect(64,450,285,44);ctx.fillStyle='#e7f8ff';ctx.font='14px sans-serif';ctx.fillText(charging?`蓄力 ${Math.round(charge*100)}% · 松开发射`:'按住「发射」或空格开始',206,478);}
+  renderer.draw(s,charge,charging);
   score.textContent=`得分 ${s.score.toLocaleString()}`;lives.textContent=`剩余 ${s.lives} 球`;launch.textContent=charging?`蓄力 ${Math.round(charge*100)}%`:s.phase==='play'?'弹球进行中':'按住发射';
  }
  function frame(now){if(destroyed)return;if(active()){const dt=last===null?0:Math.min(.15,(now-last)/1000);last=now;if(charging)charge=Math.min(1,charge+dt*.8);const old=s.score;advancePinball(s,dt,input);if(old!==s.score)env.setScore(s.score);if(now-lastSave>1500){save();lastSave=now;}if(s.phase==='over'&&!finished){finished=true;env.clear();env.speak('settle');env.finish('弹球结束',`三球挑战完成，得分 ${s.score}。`,{outcome:'score',score:s.score},{score:s.score,details:{balls:3}});}}else clearInput();draw();raf=win.requestAnimationFrame(frame);}
