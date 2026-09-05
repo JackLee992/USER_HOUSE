@@ -13768,7 +13768,7 @@ function showGameRecords(game, page) {
     let popping = [];
     let score = Number(state?.score || 0), shots = Number(state?.shots || 0), pushes = Number(state?.pushes || 0), shotsSincePush = Number(state?.shotsSincePush ?? (Number(state?.shots || 0) % Math.max(5, 10 - Math.floor(Number(state?.pushes || 0) / 2)))), bombs = Math.max(0, Math.min(5, Number(state?.bombs == null ? 5 : state.bombs)));
     let current = state?.current || '', next = state?.next || '', armedBomb = !!state?.armedBomb;
-    let flying = null, aiming = false, resolving = false, aimAngle = 0, over = false, raf = 0, lastT = 0;
+    let flying = null, aiming = false, resolving = false, aimAngle = 0, over = false, raf = 0, lastT = null, destroyed = false, turnTimer = null;
     let seen = Object.assign({ aim:false, dangerTick:0, scoreMilestone:Math.floor(score/1000) }, state?.seen || {});
     let details = Object.assign({ shots:0, pushes:0, cleared:0, dropTotal:0, dangerCount:0, bombUsed:0, bombBad:false, highStreak:0, maxHighStreak:0, amazingClear:false, clearAllCount:0 }, state?.details || {});
     const cap = row => N;
@@ -13917,7 +13917,9 @@ function showGameRecords(game, page) {
       shots++; shotsSincePush++; details.shots = shots;
       const shouldPush = shotsSincePush >= pushInterval();
       const finishTurn = () => {
-        if (over) return;
+        if (destroyed || over) return;
+        if (gamePaused) { turnTimer = setTimeout(finishTurn, 50); return; }
+        turnTimer = null;
         if (shouldPush) pushDown();
         if (over) return;
         if (bubbles.length <= 5) pushDown();
@@ -13927,7 +13929,7 @@ function showGameRecords(game, page) {
         if (over) return;
         save(); updateBombUI(); draw();
       };
-      if (shouldPush && (clearCount || dropCount || bombRemoved || popping.length)) setTimeout(finishTurn, 360);
+      if (shouldPush && (clearCount || dropCount || bombRemoved || popping.length)) turnTimer = setTimeout(finishTurn, 360);
       else finishTurn();
     }
     function pushInterval() {
@@ -14009,8 +14011,8 @@ function showGameRecords(game, page) {
       if (flying) drawBubble(flying.x, flying.y, flying.bomb ? 'bomb' : flying.color, 1);
     }
     function update(dt) {
-      if (over || currentGame !== 'paopao') return;
-      if (!gamePaused && flying) {
+      if (destroyed || over || currentGame !== 'paopao') return;
+      if (flying) {
         const sp = Math.max(560, D * 20), step = sp * dt / 1000;
         const maxSubStep = Math.max(2, D * .16);
         for (let left = step; flying && left > 0; left -= maxSubStep) {
@@ -14023,12 +14025,31 @@ function showGameRecords(game, page) {
           if (hitTop || hitBubble) resolveAt(nearestSlot(flying.x, flying.y, hitBubble), flying.color, flying.bomb);
         }
       }
-      falling.forEach(f => { f.vy += .22; f.y += f.vy; });
+      // Preserve the original 60 Hz motion without tying gravity to render frequency.
+      const frames = dt / (1000 / 60);
+      falling.forEach(f => {
+        f.y += f.vy * frames + .22 * frames * (frames + 1) / 2;
+        f.vy += .22 * frames;
+      });
       falling = falling.filter(f => f.y < H + D);
       popping.forEach(p => { p.life += dt; });
       popping = popping.filter(p => p.life < 280);
-      draw();
-      raf = requestAnimationFrame(t => { const d = lastT ? t - lastT : 16; lastT = t; update(d); });
+    }
+    function frame(now) {
+      if (destroyed || over || currentGame !== 'paopao') return;
+      if (gamePaused || getHostDocument().hidden) {
+        lastT = null;
+      } else {
+        // A suspended tab has no useful simulation time to catch up. Bound shorter
+        // stalls too, so the existing shot collision loop cannot monopolize the UI.
+        const elapsed = lastT == null ? 0 : now - lastT;
+        lastT = now;
+        update(elapsed > 1000 ? 0 : Math.max(0, Math.min(250, elapsed)));
+      }
+      if (!destroyed && !over) {
+        draw();
+        raf = requestAnimationFrame(frame);
+      }
     }
     function pointerPos(e) { const r=c.getBoundingClientRect(), t=e.touches&&e.touches[0] || e.changedTouches&&e.changedTouches[0] || e; return { x:t.clientX-r.left, y:t.clientY-r.top }; }
     function setAim(e) { const p=pointerPos(e), dx=p.x-launch.x, dy=launch.y-p.y; aimAngle = Math.max(-1.22, Math.min(1.22, Math.atan2(dx, Math.max(20, dy)))); if(!seen.aim){ seen.aim=true; speak('paopao','aim'); } }
@@ -14054,8 +14075,18 @@ function showGameRecords(game, page) {
     qs('#wb-paopao-bomb').onclick = () => { if(gamePaused||over||flying||resolving||bombs<=0) return; armedBomb = !armedBomb; if(armedBomb){ bombs--; speak('paopao','bomb'); } else bombs++; updateBombUI(); save(); draw(); };
     qs('#wb-paopao-swap').onclick = e => { e.preventDefault(); if(gamePaused||over||flying||resolving||aiming||armedBomb) return; const old=current; current=next; next=old || randomColor(); updateSwapUI(); save(); draw(); };
     resize(); updateBombUI(); setScore('paopao', score); checkDanger(); save(); draw();
-    raf = requestAnimationFrame(t => { lastT = t; update(16); });
-    getHostWindow().addEventListener('resize', () => { if(currentGame === 'paopao'){ resize(); draw(); } }, { passive:true });
+    const onResize = () => { if (!destroyed && currentGame === 'paopao') { resize(); draw(); } };
+    activeGameController = {
+      save:() => { if (!destroyed && !over) save(); },
+      destroy:() => {
+        destroyed = true;
+        cancelAnimationFrame(raf);
+        clearTimeout(turnTimer);
+        getHostWindow().removeEventListener('resize', onResize);
+      },
+    };
+    raf = requestAnimationFrame(frame);
+    getHostWindow().addEventListener('resize', onResize, { passive:true });
   }
 
   function startSnake(state) {

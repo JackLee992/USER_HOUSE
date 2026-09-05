@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>玩伴小屋 · 回归测试</title>
+<link rel="stylesheet" href="/scripts/extensions/third-party/USER_HOUSE/style.css">
+<style>body{margin:0;font-family:system-ui;background:#edf4f2}#testbar{position:fixed;z-index:2000000;bottom:0;left:0;right:0;background:#162a35e8;color:white;padding:5px;display:flex;gap:4px;align-items:center;font-size:11px}#testbar button,#testbar select{font-size:11px;padding:5px}#result{max-height:40px;overflow:auto}#extensionsMenu{padding:25px}button{cursor:pointer}</style>
+<div id="extensionsMenu"></div><div id="testbar"><select id="game"><option value="paopao">泡泡龙</option><option value="freecell">空当接龙</option><option value="pinball">三维弹球</option><option value="match3">消消乐</option></select><button id="open">打开</button><button id="run">A/B 回归</button><span id="result">加载中</span></div>
+<script src="/jquery.js"></script><script>
+window.SillyTavern={getContext:()=>({name1:'测试玩家',name2:'测试伙伴',characters:[],chat:[],extensionSettings:{}})};
+localStorage.setItem('wanbanXiaowu_settings_v1',JSON.stringify({companion:false,floatingBallEnabled:false,petDesktopEnabled:false,theme:'day'}));
+const nativeRAF=window.requestAnimationFrame.bind(window), nativeCancel=window.cancelAnimationFrame.bind(window);
+let fps=0, rid=0; const jobs=new Map();
+window.requestAnimationFrame=fn=>{const id=++rid;let nativeId=0;const begin=performance.now();const run=t=>{if(!jobs.has(id))return;if(fps&&t-begin<1000/fps){nativeId=nativeRAF(run);jobs.set(id,()=>nativeCancel(nativeId));return;}jobs.delete(id);fn(t);};nativeId=nativeRAF(run);jobs.set(id,()=>nativeCancel(nativeId));return id;};
+window.cancelAnimationFrame=id=>{jobs.get(id)?.();jobs.delete(id);};
+window.testFrames={set:value=>fps=value,pending:()=>jobs.size};
+window.testErrors=[];addEventListener('error',e=>testErrors.push(e.message));addEventListener('unhandledrejection',e=>testErrors.push(String(e.reason)));
+</script><script type="module">
+import {initWanbanXiaowu} from '/scripts/extensions/third-party/USER_HOUSE/src/runtime/wanban-app.js';
+const out=document.querySelector('#result'), wait=ms=>new Promise(r=>setTimeout(r,ms));
+await initWanbanXiaowu();wbTest.open();out.textContent='就绪';
+document.querySelector('#open').onclick=()=>{wbTest.prepare(document.querySelector('#game').value);};
+async function run(){
+ const samples=[];out.textContent='正在测试';
+ for(const rate of [60,10]){
+  testFrames.set(rate);wbTest.prepare('paopao');await wait(220);paopaoTest.setup();
+  const start=performance.now();await wait(610);const elapsed=performance.now()-start;
+  samples.push({fps:rate,elapsed,fall:paopaoTest.snapshot().falling[0]||null});
+ }
+ wbTest.pause(true);paopaoTest.setup();const before=paopaoTest.snapshot();await wait(300);const paused=paopaoTest.snapshot();delete before.lastT;delete paused.lastT;
+ wbTest.pause(false);testFrames.set(0);wbTest.prepare('paopao');
+ const data={name:/Android/.test(navigator.userAgent)?'android-via':'desktop',ua:navigator.userAgent,samples,pauseFrozen:JSON.stringify(before)===JSON.stringify(paused),errors:testErrors};
+ await fetch('/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+ out.textContent='完成：'+samples.map(s=>s.fps+'fps y='+s.fall?.y.toFixed(1)).join(' / ')+' 暂停'+data.pauseFrozen;
+ window.lastTestResult=data;
+}
+document.querySelector('#run').onclick=run;
+if(new URLSearchParams(location.search).has('autorun'))await run();
+</script></html>
