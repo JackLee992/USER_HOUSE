@@ -35,7 +35,8 @@ function styles(doc){if(doc.getElementById('wb-pinball-css'))return;const e=doc.
 export function createPinballGame(env,state){
  const {root,document:doc,window:win}=env;styles(doc);let s=restorePinball(state),destroyed=false,finished=false,last=null,raf=0,lastSave=0,charge=0,charging=false;
  const input={left:false,right:false},cleanups=[];root.innerHTML='<div class="wb-pinball"><div class="pb-hud"><span class="pb-score"></span><span class="pb-lives"></span></div><div class="pb-stage"><canvas width="420" height="680" aria-label="星港弹球台：左右方向键操作挡板，按住空格蓄力后松开发射" role="img"></canvas></div><div class="pb-controls"><button data-action="left" aria-label="左挡板">◀ 左挡板</button><button data-action="launch">按住发射</button><button data-action="right" aria-label="右挡板">右挡板 ▶</button></div><p class="pb-help">方向键控制挡板 · 按住空格蓄力，松开发射 · 共 3 球</p></div>';
- const canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d'),score=root.querySelector('.pb-score'),lives=root.querySelector('.pb-lives'),launch=root.querySelector('[data-action="launch"]');
+ // A CPU-backed context avoids blank accelerated Canvas layers in Android WebView.
+ const canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d',{willReadFrequently:true}),score=root.querySelector('.pb-score'),lives=root.querySelector('.pb-lives'),launch=root.querySelector('[data-action="launch"]');
  const data=()=>JSON.parse(JSON.stringify(s));const save=(force=false)=>{if(!finished&&!destroyed)env.save(data(),force);};const active=()=>!destroyed&&!finished&&!doc.hidden&&!env.isPaused()&&env.isActive();
  function clearInput(){input.left=input.right=false;charging=false;charge=0;root.querySelectorAll('.pb-held').forEach(b=>b.classList.remove('pb-held'));last=null;}
  function press(action){if(!active())return;if(action==='launch'){if(s.phase==='ready'){charging=true;charge=0;}}else input[action]=true;}
