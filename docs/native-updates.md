@@ -32,3 +32,7 @@ node tests/manual/native-extension-update.mjs /path/to/SillyTavern /path/to/depe
 ```
 
 这个手动工具会真实切分支／拉取其指定的测试克隆，不能指向正在使用的酒馆安装。报告记录前后提交、真实接口顺序、最终工作区 manifest 版本和保存调用。浏览器页面表现及游戏存档继续由 Via 回归负责。
+
+## 发布后更新验证
+
+3.9.0 发布后再次使用官方酒馆路由，已将真实安装从 main@4324766（3.8.0）原地拉取到 main@955ae37（3.9.0），返回版本、实际HEAD和origin/main完全一致；没有调用卸载或安装接口。记录见 [3.8 → 3.9 实际更新](evidence/native-update-to-3.9.json)。
