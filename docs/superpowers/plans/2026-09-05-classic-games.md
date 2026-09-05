@@ -44,7 +44,7 @@
 - [x] Controller updates runtime imports/GAME_META/rules/hasPlayableProgress/startCurrentGame and core/metadata.js + manifest version; add Chinese README.
 - [x] Full host harness smoke: open all games, legal moves, pause/resume, save/reload, restart/exit. Verify phone viewport and desktop appearance.
 - [x] Run `node --test tests/*.test.mjs`; inspect diff and independent whole-branch review.
-- [ ] Push feature branch to origin, verify remote commit and provide exact install branch/URL plus evidence and limits.
+- [x] Push feature branch to origin. Per user request, merge the release into main so the repository URL installs the new version directly.
 
 ## Verification status — 2026-09-05
 
@@ -52,4 +52,4 @@
 - Original timing suite: 0/7 before, 7/7 after; expanded Bubble Shooter suite: 12/12. Final integrated test run: 49/49 including 5 runtime integration tests and a renderer DPI budget test.
 - Android Emulator ARM64, Android 15/API 35, Via 7.3.3, WebView 124. Tests run actual plugin runtime with a minimal SillyTavern stub, not a complete SillyTavern installation or physical-phone certification.
 - FreeCell and Match3 Android checks passed. Pinball blank canvas was fixed with a CPU-backed 2D context and aspect-ratio fit; seven input/state checks passed again after the perspective sci-fi renderer upgrade; final Android screenshots were visually inspected.
-- Integration/version/README, three generated icons, final full suite and Android screenshot review are complete. Push and remote verification are the remaining release step.
+- Integration/version/README, three generated icons, final full suite and Android screenshot review are complete. Feature branch has been pushed; release is being fast-forwarded to main per the user installation preference.
