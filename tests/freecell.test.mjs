@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { dealFreeCell, canMoveFreeCell, moveFreeCell, undoFreeCell, restoreFreeCell, freeCellHint, isFreeCellWon } from '../src/games/freecell.js';
+import { dealFreeCell, canMoveFreeCell, moveFreeCell, undoFreeCell, restoreFreeCell, freeCellHint, isFreeCellWon, freeCellHintHighlights } from '../src/games/freecell.js';
 const card = (s,r) => s*13+r-1;
 function board(columns = [], freecells = [null,null,null,null], foundations = [[],[],[],[]]) {
   const used = [...columns.flat(), ...freecells.filter(x=>x!==null), ...foundations.flat()];
@@ -60,4 +60,22 @@ test('capacity counts free cells and destination must fit lowest selected card',
  s.freecells[2]=32;
  assert.equal(canMoveFreeCell(s,col(0,0),col(1)),false);
  assert.equal(canMoveFreeCell(s,col(0,1),col(1)),false);
+});
+
+test('hint highlights only movable source suffix and receiving top or empty slot',()=>{
+ const s=dealFreeCell(()=>0.4), hint=freeCellHint(s);
+ assert.equal(hint.from.type,'column');
+ assert.equal(hint.from.cardIndex,s.columns[hint.from.index].length-1);
+ const source=s.columns[hint.from.index].map((_,cardIndex)=>freeCellHintHighlights(s,hint,col(hint.from.index,cardIndex)));
+ assert.equal(source.filter(Boolean).length,1);
+ const target=s.columns[hint.to.index].map((_,cardIndex)=>freeCellHintHighlights(s,hint,col(hint.to.index,cardIndex)));
+ assert.equal(target.filter(Boolean).length,1);
+ assert.equal(target.at(-1),true);
+ const sequence=board([[card(0,6),card(1,5)],[],[card(2,7)]]);
+ const multi={from:col(0,0),to:col(2)};
+ assert.equal(freeCellHintHighlights(sequence,multi,col(0,0)),true);
+ assert.equal(freeCellHintHighlights(sequence,multi,col(0,1)),true);
+ assert.equal(freeCellHintHighlights(sequence,{from:col(0,1),to:col(1)},col(1)),true);
+ assert.equal(freeCellHintHighlights(sequence,multi,col(1)),false);
+ assert.equal(freeCellHintHighlights(sequence,null,col(0,0)),false);
 });

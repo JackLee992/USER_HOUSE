@@ -70,6 +70,20 @@ export function freeCellHint(s) {
   }
   return fallback;
 }
+// Each rendered card supplies its stack offset; empty slots omit it.
+export function freeCellHintHighlights(state, hint, position) {
+  if (!hint || !position) return false;
+  const matches = endpoint => endpoint?.type === position.type && endpoint.index === position.index;
+  if (matches(hint.from)) {
+    if (position.type !== 'column') return true;
+    const start = hint.from.cardIndex ?? state.columns[position.index].length - 1;
+    return Number.isInteger(position.cardIndex) && position.cardIndex >= start && position.cardIndex < state.columns[position.index].length;
+  }
+  if (!matches(hint.to)) return false;
+  if (position.type !== 'column') return true;
+  const length = state.columns[position.index].length;
+  return length ? position.cardIndex === length - 1 : position.cardIndex === undefined;
+}
 function ensureStyles(doc) {
   if(doc.getElementById('wb-freecell-css'))return;
   const style=doc.createElement('style'); style.id='wb-freecell-css'; style.textContent=`
@@ -91,8 +105,8 @@ export function createFreeCellGame(env,state) {
   function save(force=true){if(!destroyed&&!finished)env.save(data(),force);}
   function same(a,b){return a&&b&&a.type===b.type&&a.index===b.index;}
   function location(type,index,cardIndex){return `data-type="${type}" data-index="${index}"${cardIndex===undefined?'':` data-card-index="${cardIndex}"`}`;}
-  function cardHTML(c,type,index,cardIndex){const p={type,index,cardIndex}; return `<button type="button" class="fc-card ${red(c)?'red':''} ${same(selected,p)&&(type!=='column'||cardIndex>=selected.cardIndex)?'selected':''} ${same(hint?.from,p)||same(hint?.to,p)?'fc-hint':''}" ${location(type,index,cardIndex)} aria-label="${type==='column'?'第'+(index+1)+'列 ':type==='freecell'?'空当 '+(index+1)+' ':'收牌区 '}${label(c)}">${label(c)}</button>`;}
-  function slot(type,index,text){return `<button type="button" class="fc-slot ${same(hint?.to,{type,index})?'fc-hint':''}" ${location(type,index)} aria-label="${type==='column'?'空列':type==='freecell'?'空当':'收牌区'} ${index+1}">${text}</button>`;}
+  function cardHTML(c,type,index,cardIndex){const p={type,index,cardIndex}; return `<button type="button" class="fc-card ${red(c)?'red':''} ${same(selected,p)&&(type!=='column'||cardIndex>=selected.cardIndex)?'selected':''} ${freeCellHintHighlights(current,hint,p)?'fc-hint':''}" ${location(type,index,cardIndex)} aria-label="${type==='column'?'第'+(index+1)+'列 ':type==='freecell'?'空当 '+(index+1)+' ':'收牌区 '}${label(c)}">${label(c)}</button>`;}
+  function slot(type,index,text){return `<button type="button" class="fc-slot ${freeCellHintHighlights(current,hint,{type,index})?'fc-hint':''}" ${location(type,index)} aria-label="${type==='column'?'空列':type==='freecell'?'空当':'收牌区'} ${index+1}">${text}</button>`;}
   function draw(){
     const count=current.foundations.flat().length; env.setScore(count*10);
     root.innerHTML=`<section class="wb-freecell"><div class="fc-status"><span>空当接龙 · 空当（左）／收牌区（右）</span><span>步数 ${current.moves} · 已归位 ${count}/52</span></div><div class="fc-top">${current.freecells.map((c,i)=>c===null?slot('freecell',i,'空当'):cardHTML(c,'freecell',i)).join('')}${current.foundations.map((p,i)=>p.length?cardHTML(p.at(-1),'foundation',i):slot('foundation',i,SUITS[i])).join('')}</div><div class="fc-columns">${current.columns.map((p,i)=>`<div class="fc-pile" ${location('column',i)}>${p.length?p.map((c,j)=>cardHTML(c,'column',i,j)).join(''):slot('column',i,'＋')}</div>`).join('')}</div><p class="fc-help" aria-live="polite">${selected?'已选中：点击目标空当、列或同花色收牌区。':'点击牌选中，再点击目标；列内红黑交替递减，收牌区从 A 到 K。'} 成组移动上限 =（空当数 + 1）× 2 的可用空列数次方。</p><div class="fc-tools"><button data-action="undo" ${current.history.length?'':'disabled'}>↶ 撤回</button><button data-action="hint">提示</button><button data-action="finish">结算</button></div></section>`;
