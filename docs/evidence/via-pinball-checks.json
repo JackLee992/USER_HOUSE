@@ -1,0 +1,52 @@
+{
+  "game": "pinball",
+  "checks": [
+    "touch hold/release launches",
+    "two-finger flippers simultaneously lift",
+    "pause freezes state",
+    "resume countdown works",
+    "lobby reentry restores saved progress",
+    "confirmed restart discards old progress",
+    "back exits to catalog"
+  ],
+  "env": {
+    "ua": "Mozilla/5.0 (Linux; Android 15; sdk_gphone64_arm64 Build/AE3A.240806.043) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.219 Mobile Safari/537.36",
+    "width": 412,
+    "height": 746,
+    "dpr": 2.625
+  },
+  "layout": {
+    "gamebox": {
+      "x": 9.7619047164917,
+      "y": 81.80952453613281,
+      "width": 392.66668701171875,
+      "height": 653.952392578125
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "label": "左挡板",
+        "x": 22.5238094329834,
+        "y": 653.40478515625,
+        "width": 115.71428680419922,
+        "height": 46
+      },
+      {
+        "label": "按住发射",
+        "x": 148.23809814453125,
+        "y": 653.40478515625,
+        "width": 115.71428680419922,
+        "height": 46
+      },
+      {
+        "label": "右挡板",
+        "x": 273.952392578125,
+        "y": 653.40478515625,
+        "width": 115.71428680419922,
+        "height": 46
+      }
+    ]
+  },
+  "errors": [],
+  "passed": true
+}

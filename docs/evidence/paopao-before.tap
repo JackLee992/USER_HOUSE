@@ -1,0 +1,169 @@
+✖ falling bubbles travel the same distance at 10 and 60 FPS (8.745292ms)
+✖ falling bubbles travel the same distance at 15 and 60 FPS (5.562042ms)
+✖ falling bubbles travel the same distance at 30 and 60 FPS (5.966875ms)
+✖ falling bubbles travel the same distance at 120 and 60 FPS (6.779917ms)
+✖ pause freezes falling bubbles and pop effects (3.91975ms)
+✖ restart cancels the previous animation loop (2.633ms)
+✖ resume after a long callback gap does not fast-forward a shot (2.807917ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.275166
+
+✖ failing tests:
+
+test at tests/paopao-timing.test.mjs:10:38
+✖ falling bubbles travel the same distance at 10 and 60 FPS (8.745292ms)
+  AssertionError [ERR_ASSERTION]: 60 FPS y=232.51999999999995; 10 FPS y=60.62
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:12:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.start (node:internal/test_runner/test:1177:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/paopao-timing.test.mjs:10:38
+✖ falling bubbles travel the same distance at 15 and 60 FPS (5.562042ms)
+  AssertionError [ERR_ASSERTION]: 60 FPS y=232.51999999999995; 15 FPS y=68.9
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:12:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/paopao-timing.test.mjs:10:38
+✖ falling bubbles travel the same distance at 30 and 60 FPS (5.966875ms)
+  AssertionError [ERR_ASSERTION]: 60 FPS y=232.51999999999995; 30 FPS y=105.62
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:12:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/paopao-timing.test.mjs:10:38
+✖ falling bubbles travel the same distance at 120 and 60 FPS (6.779917ms)
+  TypeError: Cannot read properties of undefined (reading 'y')
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:12:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests/paopao-timing.test.mjs:15:1
+✖ pause freezes falling bubbles and pop effects (3.91975ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      bubbles: [
+        {
+          c: 0,
+          color: 'blue',
+  ...
+          color: 'blue',
+  +       vy: 1.44,
+  -       vy: 1,
+          x: 100,
+  +       y: 52.66
+  -       y: 50
+        }
+      ],
+      flying: null,
+      popping: [
+        {
+          color: 'blue',
+  +       life: 200,
+  -       life: 0,
+          seed: 0,
+          x: 100,
+          y: 50
+        }
+      ],
+  
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:18:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { falling: [ [Object] ], popping: [ [Object] ], flying: null, bubbles: [ [Object] ], shots: 0, score: 0 },
+    expected: { falling: [ [Object] ], popping: [ [Object] ], flying: null, bubbles: [ [Object] ], shots: 0, score: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/paopao-timing.test.mjs:20:1
+✖ restart cancels the previous animation loop (2.633ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:22:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/paopao-timing.test.mjs:25:1
+✖ resume after a long callback gap does not fast-forward a shot (2.807917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/paopao-timing.test.mjs:28:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

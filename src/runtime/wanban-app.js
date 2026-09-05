@@ -3,6 +3,9 @@ import { EXTENSION_VERSION } from '../core/metadata.js';
 import { DEFAULT_LINES, PROMPT_TEMPLATES } from './wanban-prompts.js';
 import { createZumaGame } from '../games/zuma.js';
 import { createWaterSortGame } from '../games/water-sort.js';
+import { createFreeCellGame } from '../games/freecell.js';
+import { createPinballGame } from '../games/pinball.js';
+import { createMatch3Game } from '../games/match3.js';
 
 // Runtime migrated from 益智小游戏/玩伴小屋V1.0.1.json.
 // Keep this file behavior-compatible with the original script; split new code into src/* modules when extending.
@@ -198,6 +201,9 @@ export async function initWanbanXiaowu() {
     spider: { id: 'spider', name: '无尽蜘蛛纸牌', mode: 'single', unit: '分', icon: '蛛', iconImage: GAME_ICON_BASE + 'spider.png' },
     linklink: { id: 'linklink', name: '连连看', mode: 'single', unit: '分', icon: '连', iconImage: GAME_ICON_BASE + 'lian.png' },
     shuerte: { id: 'shuerte', name: '舒尔特方格', mode: 'single', unit: '分', icon: '舒', iconImage: GAME_ICON_BASE + 'shuerte.png' },
+    pinball: { id: 'pinball', name: '三维弹球', mode: 'single', unit: '分', icon: '◉', iconImage: GAME_ICON_BASE + 'pinball.png' },
+    match3: { id: 'match3', name: '消消乐', mode: 'single', unit: '分', icon: '◆', iconImage: GAME_ICON_BASE + 'match3.png' },
+    freecell: { id: 'freecell', name: '空当接龙', mode: 'single', unit: '分', icon: '♠', iconImage: GAME_ICON_BASE + 'freecell.png' },
     zuma: { id: 'zuma', name: '祖玛', mode: 'single', unit: '分', icon: '珠', iconImage: GAME_ICON_BASE + 'zuma.png' },
     watersort: { id: 'watersort', name: '倒瓶子', mode: 'single', unit: '分', icon: '瓶', iconImage: GAME_ICON_BASE + 'watersort.png' },
     ludo: { id: 'ludo', name: '双人飞行棋', mode: 'double', unit: '胜', icon: '✈', iconImage: GAME_ICON_BASE + 'ludo.jpg' },
@@ -289,6 +295,9 @@ export async function initWanbanXiaowu() {
     screw: '每局会选择普通模式或无尽模式，并保证每种颜色螺丝数量为3的倍数、工具盒数量正确。顶部同时出现3个随机颜色工具盒，点击可见螺丝后，同色螺丝进入对应工具盒；非当前盒颜色会进入5格临时托盘。任意工具盒收满3颗会自动打包并刷新下一个颜色。上层面板会遮挡下层螺丝；板件剩一个螺丝时会悬挂摆动，失去全部螺丝后受重力下落。普通模式清空全部面板即可过关，无尽模式会在快结束时续上下一批。',
     popstar: '10×10彩色星星棋盘。点击2个及以上上下左右相连的同色星星即可消除，得分为消除数量×消除数量×5，8/12/16个以上大块会有额外奖励。困难模式每关有步数限制，消除、打乱、单消都会消耗1步；简单模式没有步数限制，可以一直消到没有可消除组合。无可消除组合或困难模式步数用完时本关结算，剩余10个以内有少量奖励；如果无可消除组合且还剩步数，会按未用步数奖励。累计分数达到当前关目标就进入下一关，否则游戏结束。',
     paopao: '交错网格泡泡射击。按住或拖动瞄准，松开发射；泡泡会在左右墙反弹，撞到天花板或现有泡泡后吸附到最近空槽。3个及以上同色相连会消除，不再连着顶部的泡泡会掉落得分。初始每发射10次顶部压下一行，每下压3行后间隔减少1次，最低固定为5次；场上只剩5个以内会立刻补压一行。任意泡泡越过红色警戒线即结束。每局有5个炸弹，炸弹会消除落点周围3格泡泡。',
+    pinball: '经典桌面弹球核心玩法：按住发射蓄力，松手出球。触屏左右按钮或键盘左右方向键控制挡板，空格控制发射。撞击弹跳器和目标得分，球落入底部出球口扣一球，三球用尽结算。可暂停和继续保存的球局。',
+    match3: '交换相邻两颗宝石，横竖连续3颗及以上同色宝石消除。无效交换不扣步数；消除后下落补齐并可连续连锁，4连5连有奖励。有限步数内达到目标分进入下一关，没有可用交换时自动重排。点击两颗宝石或滑动交换，提示按钮标出可行走法。',
+    freecell: '经典空当接龙：52张牌分为8列，4个空当可暂存单牌，4个收牌区按同花色A至K递增。列内按红黑交替递减，可移动长度受空当和空列限制。点击源牌再点击目标，使用提示或撤销；全部收齐获胜。',
     zuma: '青蛙位于轨道中央，按住棋盘瞄准、拖动调整方向，松手后吐出彩珠；发射瞬间青蛙口中的珠子会立即切换为下一颗。整局只有一条持续运动的珠链，没有关卡或轮次；入口会按珠链前进距离持续补入新珠子，累计生成后颜色从4种逐步增加到最多6种。彩珠撞到珠链后会插入，连续3颗及以上同色珠会先膨胀爆裂并淡出，随后前方珠链平滑回退；回退接合后如果再次凑成同色三消，会继续播放爆裂和回退连锁。清空整条珠链奖励600分，之后仍会继续生成新珠子，只有珠链进入终点洞口才结束。珠链较短时会适当减速；速度也会按每450分、累计消除22颗以及当前超过24颗的珠链数量继续提升，最高84。下方炸弹可炸掉命中点附近5颗珠，减速可让珠链减速8秒，彩虹珠会变成命中珠子的颜色。',
     watersort: '点击一个非空瓶子，再点击目标瓶子，将源瓶顶部连续同色的水一次倒入目标瓶。目标瓶必须为空，或顶部颜色相同，并且仍有容量；每瓶最多4层。所有非空瓶都装满4层同色水即可进入下一关，关卡无限生成。颜色会从3种逐步增加到最多10种，第9关起初始空瓶由2只减为1只，反向打乱深度也会逐步提高并继续验证解序列。撤回会逐关补充，提示每2关补充，额外空瓶每5关补充；可随时点击结算结束本局。',
     game1010: '10×10方块拼图。拖动底部3个候补方块放入棋盘，方块不可旋转；任意行或列填满会同时消除且不会下落。3个方块全部放完后刷新新一批。每局有3次重新生成和3次小锤子，死局且道具耗尽时结束。',
@@ -935,6 +944,9 @@ export async function initWanbanXiaowu() {
     if (game === 'screw') return !!(state.panels && state.panels.some(p => !p.gone)) || !!(state.tray && state.tray.length);
     if (game === 'popstar') return !!state.score || Number(state.level || 1) > 1 || !!(state.board && state.board.some(row => row && row.some(Boolean)));
     if (game === 'paopao') return !!state.score || !!state.shots || !!(state.bubbles && state.bubbles.length); 
+    if (game === 'pinball') return state.version === 1 && state.lives > 0 && state.phase !== 'over';
+    if (game === 'match3') return !!(state.board && state.board.length === 8 && state.board.every(row => Array.isArray(row) && row.length === 8) && state.moves > 0);
+    if (game === 'freecell') return !!(state.columns && state.columns.length === 8);
     if (game === 'zuma') return !!state.score || !!(state.details && (state.details.shots || state.details.totalBallsGenerated)) || !!(state.chain && state.chain.length);
     if (game === 'watersort') return !!state.score || Number(state.level || 1) > 1 || !!state.moves || !!(state.bottles && state.bottles.length);
     if (game === 'game1010') return !!state.score || !!(state.grid && state.grid.some(row => row && row.some(Boolean))) || !!(state.pieces && state.pieces.some(p => p && !p.used));
@@ -11937,7 +11949,7 @@ export async function initWanbanXiaowu() {
       };
     }
     const pbtn = qs('#wb-pause'); if (pbtn) pbtn.onclick = togglePause;
-    qs('#wb-restart').onclick = () => { commitGameActiveDuration(true); gamePaused = true; showGamePauseOverlay(); const pbtn = qs('#wb-pause'); if (pbtn) pbtn.textContent = '继续'; showConfirm('确认重开', '确定要重开当前游戏吗？当前进度会丢失。', () => { clearProgress(id); renderGame(id); }, () => startPauseResumeCountdown()); };
+    qs('#wb-restart').onclick = () => { commitGameActiveDuration(true); gamePaused = true; showGamePauseOverlay(); const pbtn = qs('#wb-pause'); if (pbtn) pbtn.textContent = '继续'; showConfirm('确认重开', '确定要重开当前游戏吗？当前进度会丢失。', () => { stopGame(); clearProgress(id); renderGame(id); }, () => startPauseResumeCountdown()); };
     renderLinePresetSelect(id);
     const presetSelect = qs('#wb-line-preset-select'); if (presetSelect) presetSelect.onchange = () => applyLinePresetSelection(id, presetSelect.value);
     const genBtn = qs('#wb-generate-lines'); if (genBtn) genBtn.onclick = () => openSingleGenerateChoice(id);
@@ -11997,6 +12009,9 @@ export async function initWanbanXiaowu() {
     if (id === 'paopao') startPaopao(resumeState);
     if (id === 'zuma') activeGameController = createZumaGame(resumeState, modularGameEnvironment(id));
     if (id === 'watersort') activeGameController = createWaterSortGame(resumeState, modularGameEnvironment(id));
+    if (id === 'pinball') activeGameController = createPinballGame(modularGameEnvironment(id), resumeState);
+    if (id === 'match3') activeGameController = createMatch3Game(modularGameEnvironment(id), resumeState);
+    if (id === 'freecell') activeGameController = createFreeCellGame(modularGameEnvironment(id), resumeState);
     if (id === 'game1010') startGame1010(resumeState);
     if (id === 'turkey') startTurkey(resumeState);
     if (id === 'spider') startSpider(resumeState);

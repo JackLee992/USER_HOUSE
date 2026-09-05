@@ -1,0 +1,15 @@
+✔ falling bubbles travel the same distance at 10 and 60 FPS (7.680542ms)
+✔ falling bubbles travel the same distance at 15 and 60 FPS (5.616166ms)
+✔ falling bubbles travel the same distance at 30 and 60 FPS (5.357167ms)
+✔ falling bubbles travel the same distance at 120 and 60 FPS (6.351542ms)
+✔ pause freezes falling bubbles and pop effects (3.147ms)
+✔ restart cancels the previous animation loop (2.508ms)
+✔ resume after a long callback gap does not fast-forward a shot (2.288417ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 102.497125

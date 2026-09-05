@@ -1,0 +1,31 @@
+✖ new game snapshots are recognized by the real runtime resume gate (3.531542ms)
+✔ finished pinball and exhausted match-three are not offered as progress (0.389917ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.613917
+
+✖ failing tests:
+
+test at tests/runtime-progress.test.mjs:12:1
+✖ new game snapshots are recognized by the real runtime resume gate (3.531542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/jacklee/develop/daillyTasks/USER_HOUSE/tests/runtime-progress.test.mjs:15:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.start (node:internal/test_runner/test:1177:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

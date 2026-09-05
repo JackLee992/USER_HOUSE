@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "icons": [
+    {
+      "id": "freecell",
+      "loaded": true,
+      "width": 1254
+    },
+    {
+      "id": "pinball",
+      "loaded": true,
+      "width": 1254
+    },
+    {
+      "id": "match3",
+      "loaded": true,
+      "width": 1254
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "android-via",
+  "ua": "Mozilla/5.0 (Linux; Android 15; sdk_gphone64_arm64 Build/AE3A.240806.043) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.219 Mobile Safari/537.36",
+  "samples": [
+    {
+      "fps": 60,
+      "elapsed": 610.3999999999942,
+      "fall": {
+        "x": 100,
+        "y": 65.92,
+        "vy": 2.7600000000000007,
+        "color": "blue"
+      }
+    },
+    {
+      "fps": 10,
+      "elapsed": 610.3999999999942,
+      "fall": {
+        "x": 100,
+        "y": 60.62,
+        "vy": 2.3200000000000003,
+        "color": "blue"
+      }
+    }
+  ],
+  "pauseFrozen": false,
+  "errors": []
+}

@@ -1,0 +1,20 @@
+✔ water sort pours the complete top run up to bottle capacity (1.089ms)
+✔ endless water sort levels preserve colors and include a valid solution (1147.16375ms)
+✔ water sort difficulty increases and then caps without capping level numbers (0.158583ms)
+✔ zuma path lookup and continuous chain generation remain valid (0.4535ms)
+✔ zuma speed rises with progress and remains capped (0.0695ms)
+✔ falling bubbles travel the same distance at 10 and 60 FPS (11.09725ms)
+✔ falling bubbles travel the same distance at 15 and 60 FPS (7.561958ms)
+✔ falling bubbles travel the same distance at 30 and 60 FPS (6.325583ms)
+✔ falling bubbles travel the same distance at 120 and 60 FPS (9.057125ms)
+✔ pause freezes falling bubbles and pop effects (3.896833ms)
+✔ restart cancels the previous animation loop (2.913667ms)
+✔ resume after a long callback gap does not fast-forward a shot (2.435541ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1221.220542

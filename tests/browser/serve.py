@@ -51,4 +51,4 @@ class Handler(http.server.BaseHTTPRequestHandler):
   (args.artifacts/name).write_text(json.dumps(data,ensure_ascii=False,indent=2))
   self.send_response(200);self.end_headers();self.wfile.write(b'ok')
 print(f'http://127.0.0.1:{args.port}',flush=True)
-http.server.ThreadingHTTPServer(('0.0.0.0',args.port),Handler).serve_forever()
+http.server.ThreadingHTTPServer(('127.0.0.1',args.port),Handler).serve_forever()
