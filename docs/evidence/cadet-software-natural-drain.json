@@ -1,0 +1,1555 @@
+{
+  "samples": [
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 0,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "Awaiting Deployment",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 100,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 6192,
+      "ticks": 774,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -7.03562,
+          "y": 11.675,
+          "z": 0.3,
+          "speed": 0.0319788,
+          "vx": -0.00000366168,
+          "vy": -0.0319788
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 0,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 8224,
+      "ticks": 1028,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -0.23124,
+          "y": -12.0678,
+          "z": 0.3,
+          "speed": 6.00393,
+          "vx": -5.93563,
+          "vy": 0.903055
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 3000,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 10256,
+      "ticks": 1282,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 1.3241,
+          "y": -8.95011,
+          "z": 0.3,
+          "speed": 2.82351,
+          "vx": -1.4155,
+          "vy": 2.44306
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 7000,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 12288,
+      "ticks": 1536,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 1.57268,
+          "y": -11.1684,
+          "z": 0.3,
+          "speed": 5.84204,
+          "vx": 4.24952,
+          "vy": -4.00887
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 12500,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 14320,
+      "ticks": 1790,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 0.851628,
+          "y": -11.222,
+          "z": 0.3,
+          "speed": 15.3433,
+          "vx": 7.75757,
+          "vy": -13.2377
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 14500,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 16336,
+      "ticks": 2042,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -0.252372,
+          "y": -5.67294,
+          "z": 0.3,
+          "speed": 9.83683,
+          "vx": -0.125874,
+          "vy": 9.83603
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 19500,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Target Practice Mission",
+      "info": "Wormhole Opened",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 18368,
+      "ticks": 2296,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -1.05181,
+          "y": 12.1854,
+          "z": 0.3,
+          "speed": 16.5905,
+          "vx": 11.5646,
+          "vy": -11.8956
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 21000,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 20408,
+      "ticks": 2551,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 3.35962,
+          "y": 3.07194,
+          "z": 0.3,
+          "speed": 10.0945,
+          "vx": -9.8083,
+          "vy": 2.38665
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 24000,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 22440,
+      "ticks": 2805,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 0.393571,
+          "y": -1.22952,
+          "z": 0.3,
+          "speed": 10.6776,
+          "vx": -3.24854,
+          "vy": 10.1714
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 24000,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 24472,
+      "ticks": 3059,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 2.67331,
+          "y": 6.65849,
+          "z": 0.3,
+          "speed": 2.61776,
+          "vx": -2.15539,
+          "vy": 1.48558
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 24000,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 26504,
+      "ticks": 3313,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -1.0625,
+          "y": 10.9555,
+          "z": 0.3,
+          "speed": 3.73081,
+          "vx": 0.136398,
+          "vy": 3.72832
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 34000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Crash Bonus\n10000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 28536,
+      "ticks": 3567,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 34000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 30568,
+      "ticks": 3821,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 34000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "Awaiting Deployment",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 36008,
+      "ticks": 4501,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -7.05214,
+          "y": -0.312448,
+          "z": 0.3,
+          "speed": 55.2945,
+          "vx": -0.265338,
+          "vy": -55.2939
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 34000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 38040,
+      "ticks": 4755,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 1.64564,
+          "y": -10.5805,
+          "z": 0.3,
+          "speed": 3.66119,
+          "vx": -3.34629,
+          "vy": 1.48549
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 39000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 40072,
+      "ticks": 5009,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 0.233468,
+          "y": -8.65804,
+          "z": 0.3,
+          "speed": 20.4341,
+          "vx": 4.04837,
+          "vy": -20.0291
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 42000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 42088,
+      "ticks": 5261,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 6.74487,
+          "y": -6.98357,
+          "z": 0.3,
+          "speed": 5.12802,
+          "vx": -0.188901,
+          "vy": 5.12454
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 49000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Ship Re-Fueled",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 44120,
+      "ticks": 5515,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -0.284233,
+          "y": 11.3651,
+          "z": 0.3,
+          "speed": 14.4504,
+          "vx": -14.3734,
+          "vy": -1.48954
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 49000,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 46152,
+      "ticks": 5769,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -0.0577739,
+          "y": 13.3391,
+          "z": 0.3,
+          "speed": 6.80583,
+          "vx": 3.96297,
+          "vy": 5.53301
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 74000,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Crash Bonus\n25000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 48184,
+      "ticks": 6023,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 74000,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "Awaiting Deployment",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 50216,
+      "ticks": 6277,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -7.02206,
+          "y": 11.6142,
+          "z": 0.3,
+          "speed": 0.533386,
+          "vx": 0.00494968,
+          "vy": 0.533363
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 74000,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 55656,
+      "ticks": 6957,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 0.814292,
+          "y": -11.9538,
+          "z": 0.3,
+          "speed": 6.40994,
+          "vx": -6.24387,
+          "vy": -1.44963
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 76000,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 57688,
+      "ticks": 7211,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -1.09445,
+          "y": -9.24543,
+          "z": 0.3,
+          "speed": 4.01279,
+          "vx": -0.646171,
+          "vy": 3.96042
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 78500,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Player 1",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 59720,
+      "ticks": 7465,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -1.2854,
+          "y": -9.93075,
+          "z": 0.3,
+          "speed": 3.06294,
+          "vx": -1.60586,
+          "vy": 2.60822
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 86500,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Weapons Upgraded",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 61736,
+      "ticks": 7717,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 6.31373,
+          "y": -8.08858,
+          "z": 0.3,
+          "speed": 11.817,
+          "vx": -3.3463,
+          "vy": 11.3333
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 88750,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 63768,
+      "ticks": 7971,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 4.84139,
+          "y": -4.86766,
+          "z": 0.3,
+          "speed": 11.8077,
+          "vx": -11.6146,
+          "vy": 2.12686
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 88750,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 65800,
+      "ticks": 8225,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": -3.12195,
+          "y": 2.49291,
+          "z": 0.3,
+          "speed": 12.8898,
+          "vx": -2.19827,
+          "vy": 12.701
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 91750,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 67832,
+      "ticks": 8479,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 5.29631,
+          "y": 0.521963,
+          "z": 0.3,
+          "speed": 9.93768,
+          "vx": 6.36293,
+          "vy": 7.63352
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 92250,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 1,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 69872,
+      "ticks": 8734,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": true,
+          "x": 2.14505,
+          "y": 11.2208,
+          "z": 0.3,
+          "speed": 3.79641,
+          "vx": -3.59708,
+          "vy": 1.21397
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 117250,
+      "lives": 0,
+      "extraBalls": 0,
+      "gameover": true,
+      "paused": false,
+      "gameMode": 2,
+      "rank": 3,
+      "rankProgress": 3,
+      "missionId": 32,
+      "mission": "Launch Ramp To Accept Launch Training Mission",
+      "info": "Crash Bonus\n25000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 70872,
+      "ticks": 8859,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    }
+  ],
+  "final": {
+    "ready": true,
+    "renderer": "software",
+    "score": 117250,
+    "lives": 0,
+    "extraBalls": 0,
+    "gameover": true,
+    "paused": true,
+    "gameMode": 2,
+    "rank": 3,
+    "rankProgress": 3,
+    "missionId": 32,
+    "mission": "",
+    "info": "Game Paused\nF3 to Resume",
+    "tilted": false,
+    "multiplier": 0,
+    "plungerBoost": 0,
+    "plungerMax": 100,
+    "plungerIncrement": 1,
+    "components": 343,
+    "elapsedMs": 70872,
+    "ticks": 8859,
+    "tableRect": {
+      "x": 0,
+      "y": 0,
+      "width": 365,
+      "height": 470
+    },
+    "left": 0,
+    "right": 0,
+    "inputs": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "balls": [
+      {
+        "active": false,
+        "x": 0,
+        "y": 0,
+        "z": 0.3,
+        "speed": 0,
+        "vx": 0,
+        "vy": 0
+      }
+    ]
+  },
+  "errors": []
+}

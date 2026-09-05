@@ -1,0 +1,65 @@
+{
+  "officialSillyTavernCommit": "8172dcd0ee672d3cd9a5e5f7af134f91a45cd2b8",
+  "before": {
+    "branch": "main",
+    "commit": "3b13bbf06b3444c5826c943f6f4b288eb98639e4",
+    "remote": "https://github.com/JackLee992/USER_HOUSE.git"
+  },
+  "after": {
+    "branch": "main",
+    "commit": "43247667538a3ee8032b18993cb3e031d7caf1a1",
+    "remoteMain": "43247667538a3ee8032b18993cb3e031d7caf1a1",
+    "manifestVersion": "3.8.0"
+  },
+  "requests": [
+    {
+      "url": "/api/extensions/discover",
+      "body": null
+    },
+    {
+      "url": "/api/extensions/version",
+      "body": {
+        "extensionName": "USER_HOUSE",
+        "global": false
+      }
+    },
+    {
+      "url": "/api/extensions/update",
+      "body": {
+        "extensionName": "USER_HOUSE",
+        "global": false
+      }
+    },
+    {
+      "url": "/api/extensions/version",
+      "body": {
+        "extensionName": "USER_HOUSE",
+        "global": false
+      }
+    }
+  ],
+  "messages": [
+    "更新完成，点击“刷新生效”；无需卸载，存档和设置保留。"
+  ],
+  "saves": [
+    "game",
+    "progress",
+    "settings"
+  ],
+  "state": {
+    "checking": false,
+    "updating": false,
+    "checked": true,
+    "available": false,
+    "updated": true,
+    "error": "",
+    "data": {
+      "currentBranchName": "main",
+      "currentCommitHash": "43247667538a3ee8032b18993cb3e031d7caf1a1",
+      "isUpToDate": true,
+      "remoteUrl": "https://github.com/JackLee992/USER_HOUSE.git",
+      "extensionName": "USER_HOUSE",
+      "global": false
+    }
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "checks": [],
+  "samples": [
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 0,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "Awaiting Deployment",
+      "info": "Continue Play",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 0,
+      "ticks": 0,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": -0.8,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 23250,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Crash Bonus\n10000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 17688,
+      "ticks": 2211,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 80750,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Crash Bonus\n25000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 40104,
+      "ticks": 5013,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 164250,
+      "lives": 0,
+      "extraBalls": 0,
+      "gameover": true,
+      "paused": false,
+      "gameMode": 2,
+      "rank": 1,
+      "rankProgress": 6,
+      "missionId": 32,
+      "mission": "Hit Mission Targets To Select Mission",
+      "info": "Crash Bonus\n25000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 60040,
+      "ticks": 7505,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    }
+  ],
+  "final": {
+    "ready": true,
+    "renderer": "software",
+    "score": 164250,
+    "lives": 0,
+    "extraBalls": 0,
+    "gameover": true,
+    "paused": false,
+    "gameMode": 2,
+    "rank": 1,
+    "rankProgress": 6,
+    "missionId": 32,
+    "mission": "Hit Mission Targets To Select Mission",
+    "info": "Crash Bonus\n25000",
+    "tilted": false,
+    "multiplier": 0,
+    "plungerBoost": 0,
+    "plungerMax": 100,
+    "plungerIncrement": 1,
+    "components": 343,
+    "elapsedMs": 60040,
+    "ticks": 7505,
+    "tableRect": {
+      "x": 0,
+      "y": 0,
+      "width": 365,
+      "height": 470
+    },
+    "left": 0,
+    "right": 0,
+    "inputs": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "balls": [
+      {
+        "active": false,
+        "x": 0,
+        "y": 0,
+        "z": 0.3,
+        "speed": 0,
+        "vx": 0,
+        "vy": 0
+      }
+    ]
+  },
+  "page": "玩伴小屋\n玩伴小屋\n×\n返回\n三维弹球\n💡\n本局：164250\n记录\n继续\n重开\nSPACE CADET\n164,250\n学员 · 1×\n0 球\n击任务靶选择 → 上坡接受任务\n已暂停 · 点击上方“继续”\n◀ 左挡板\n长按蓄力\n右挡板 ▶\n震台\n长按约 3 秒松手发射 · 方向键挡板 · 连震会 TILT\n音效 开\n素材\n弹球结束\n游戏：三维弹球\nSpace Cadet · 本局 164250 分\n最高：356250分\n陪伴者：TA\n开启下一把\n留在本局",
+  "errors": [],
+  "passed": true
+}

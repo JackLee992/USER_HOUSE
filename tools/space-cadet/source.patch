@@ -1,0 +1,378 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fca48f3..c909a76 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,11 +16,11 @@ if(WIN32)
+ endif()
+ 
+ if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+-        set(USE_FLAGS "-s USE_SDL=2 -s USE_SDL_MIXER=2")
++        set(USE_FLAGS "-s USE_SDL=2 -s USE_SDL_MIXER=2 -s SDL2_MIXER_FORMATS=[]")
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${USE_FLAGS}")
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${USE_FLAGS}")
+         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${USE_FLAGS}")
+-        set(CMAKE_EXECUTABLE_SUFFIX .html)
++        set(CMAKE_EXECUTABLE_SUFFIX .js)
+ 
+         set(SDL2_FOUND TRUE)
+         set(SDL2_INCLUDE_DIR "${EMSCRIPTEN_ROOT_PATH}/system/include/SDL2/")
+@@ -186,6 +186,10 @@ if (MUSIC_TSF)
+                 SpaceCadetPinball/tsf.h)
+ endif()
+ 
++if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
++        list(PREPEND SOURCE_FILES SpaceCadetPinball/cadet_bridge.cpp)
++endif()
++
+ add_executable(SpaceCadetPinball ${SOURCE_FILES})
+ 
+ # Skip pch on foreign code
+@@ -216,11 +220,12 @@ endif()
+ target_link_libraries(SpaceCadetPinball ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY})
+ 
+ if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+-        target_link_libraries(SpaceCadetPinball idbfs.js)
+-        set_target_properties(SpaceCadetPinball PROPERTIES LINK_FLAGS
+-        "-s ALLOW_MEMORY_GROWTH=1 -s FORCE_FILESYSTEM=1 -s DEMANGLE_SUPPORT=1 \
+-        --shell-file ${CMAKE_CURRENT_SOURCE_DIR}/SpaceCadetPinball/emscripten_shell.html \
+-        --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/game_resources@game_resources --bind")
++        target_link_libraries(SpaceCadetPinball "-lidbfs.js")
++        set_target_properties(SpaceCadetPinball PROPERTIES OUTPUT_NAME "space-cadet" LINK_FLAGS
++        "-s ALLOW_MEMORY_GROWTH=1 -s FORCE_FILESYSTEM=1 -s ENVIRONMENT=web -s SDL2_MIXER_FORMATS=[] \
++        -s EXPORTED_FUNCTIONS=['_main','_cadet_ready','_cadet_new_game','_cadet_restore_checkpoint','_cadet_input','_cadet_set_paused','_cadet_snapshot','_cadet_set_muted'] \
++        -s EXPORTED_RUNTIME_METHODS=['ccall','cwrap','FS','UTF8ToString'] \
++        --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/game_resources@game_resources")
+ endif()
+ 
+ # On Windows, copy DLL to output
+diff --git a/SpaceCadetPinball/TTableLayer.cpp b/SpaceCadetPinball/TTableLayer.cpp
+index 0c2b5f5..a5e734c 100644
+--- a/SpaceCadetPinball/TTableLayer.cpp
++++ b/SpaceCadetPinball/TTableLayer.cpp
+@@ -29,6 +29,26 @@ TTableLayer::TTableLayer(TPinballTable* table): TCollisionComponent(table, -1, f
+ 
+ 	auto bmp = visual.Bitmap;
+ 	VisBmp = visual.Bitmap;
++#ifdef __EMSCRIPTEN__
++    // Optional original true-color art, supplied with the CC0 table only.
++    // Geometry, indexed transparency, all sprites and z-maps remain unchanged.
++    if (auto rgbaFile = fopen("/game_resources/table.rgba", "rb")) {
++        const size_t expected=static_cast<size_t>(bmp->Width)*bmp->Height*4;
++        fseek(rgbaFile,0,SEEK_END);
++        const long length=ftell(rgbaFile);
++        rewind(rgbaFile);
++        if(length>=0 && static_cast<size_t>(length)==expected) {
++            std::vector<unsigned char> pixels(expected);
++            if(fread(pixels.data(),1,expected,rgbaFile)==expected) {
++                for(int y=0;y<bmp->Height;++y) for(int x=0;x<bmp->Width;++x) {
++                    const size_t pos=(static_cast<size_t>(y)*bmp->Width+x)*4;
++                    bmp->BmpBufPtr1[y*bmp->Stride+x]=ColorRgba(Rgba{pixels[pos+2],pixels[pos+1],pixels[pos],255});
++                }
++            }
++        }
++        fclose(rgbaFile);
++    }
++#endif
+ 	rect.XPosition = 0;
+ 	rect.YPosition = 0;
+ 	rect.Width = bmp->Width;
+diff --git a/SpaceCadetPinball/cadet_bridge.cpp b/SpaceCadetPinball/cadet_bridge.cpp
+new file mode 100644
+index 0000000..f66dd11
+--- /dev/null
++++ b/SpaceCadetPinball/cadet_bridge.cpp
+@@ -0,0 +1,207 @@
++// USER_HOUSE browser integration. MIT, same terms as the engine.
++#include "pch.h"
++#include "pb.h"
++#include "winmain.h"
++#include "options.h"
++#include "render.h"
++#include "pinball.h"
++#include "Sound.h"
++#include "TPinballTable.h"
++#include "TPinballComponent.h"
++#include "TTextBox.h"
++#include "TBall.h"
++#include "score.h"
++#include "timer.h"
++#include "TPlunger.h"
++#include "TFlipper.h"
++#include "TFlipperEdge.h"
++#include <emscripten.h>
++#include <sstream>
++#include <cmath>
++
++namespace {
++bool ready = false;
++bool loopRegistered = false;
++bool loopSleeping = false;
++bool requestedPause = true;
++bool held[6]{};
++double lastTick = 0;
++double remainderMs = 0;
++unsigned long ticks = 0;
++std::string snapshot;
++int keyFor(int action) {
++    switch (action) {
++    case 0: return options::Options.LeftFlipperKey;
++    case 1: return options::Options.RightFlipperKey;
++    case 2: return options::Options.PlungerKey;
++    case 3: return options::Options.LeftTableBumpKey;
++    case 4: return options::Options.RightTableBumpKey;
++    case 5: return options::Options.BottomTableBumpKey;
++    default: return 0;
++    }
++}
++void releaseAll() {
++    for (int i = 0; i < 6; ++i) { pb::keyup(keyFor(i)); held[i] = false; }
++}
++std::string quote(const char* value) {
++    std::string result = "\"";
++    if (value) for (const unsigned char* p = (const unsigned char*)value; *p; ++p) {
++        switch (*p) {
++        case '\\': result += "\\\\"; break;
++        case '"': result += "\\\""; break;
++        case '\n': result += "\\n"; break;
++        case '\r': result += "\\r"; break;
++        case '\t': result += "\\t"; break;
++        default: if (*p >= 32 && *p < 128) result += *p; else { char escaped[7]; snprintf(escaped, sizeof escaped, "\\u%04x", *p); result += escaped; }
++        }
++    }
++    return result + "\"";
++}
++const char* textOf(TTextBox* box) { return box && box->Message1 ? box->Message1->Text : ""; }
++int countLights(const char* name) {
++    auto component = pb::MainTable->find_component(name);
++    return component ? component->Message(37, 0.0f) : 0;
++}
++void tick() {
++    const double now = emscripten_get_now();
++    double elapsed = lastTick ? now - lastTick : 0;
++    lastTick = now;
++    winmain::ProcessWindowMessages();
++    // The host owns pause and focus. Touch controls live outside this iframe;
++    // focusing them must not suspend the table or lose a held flipper.
++    if ((winmain::single_step != 0) != requestedPause) pb::pause_continue();
++    if (!requestedPause) {
++        // Keep physics tied to elapsed time at low display refresh rates. Short
++        // steps preserve collision/target processing; long background gaps drop.
++        if (elapsed > 1000 || elapsed < 0) elapsed = 0;
++        remainderMs += std::min(elapsed, 250.0);
++        while (remainderMs >= 8) { pb::frame(8); remainderMs -= 8; ++ticks; }
++    } else remainderMs = 0;
++    SDL_RenderClear(winmain::Renderer);
++    render::PresentVScreen();
++    SDL_RenderPresent(winmain::Renderer);
++    if(requestedPause && loopRegistered && !loopSleeping) {
++        emscripten_pause_main_loop();
++        loopSleeping=true;
++    }
++}
++}
++
++extern "C" {
++EMSCRIPTEN_KEEPALIVE int cadet_ready() { return ready; }
++EMSCRIPTEN_KEEPALIVE void cadet_new_game() {
++    if (!ready) return;
++    releaseAll();
++    options::Options.Players = 1;
++    if (winmain::single_step) pb::pause_continue();
++    pb::replay_level(0);
++    requestedPause = false;
++    lastTick = emscripten_get_now();
++    remainderMs = 0;
++    Sound::Activate();
++    if(loopRegistered && loopSleeping) { loopSleeping=false; emscripten_resume_main_loop(); }
++}
++// A deliberate new-ball checkpoint, not a full mission/physics snapshot.
++EMSCRIPTEN_KEEPALIVE void cadet_restore_checkpoint(double savedScore, int lives, int rank, int progress) {
++    if (!ready || !std::isfinite(savedScore)) return;
++    cadet_new_game();
++    auto table=pb::MainTable;
++    // Finish the new-game light show before applying restored rank lamps; its
++    // delayed reset would otherwise clear them after this function returns.
++    if(table->LightShowTimer) {
++        timer::kill(table->LightShowTimer);
++        TPinballTable::LightShow_timeout(0,table);
++    }
++    const long long total=static_cast<long long>(std::max(0.0, std::min(savedScore, 9999999999.0)));
++    table->CurScore=static_cast<int>(total%1000000000LL);
++    table->CurScoreE9=static_cast<int>(total/1000000000LL);
++    table->PlayerScores[0].Score=table->CurScore;
++    table->PlayerScores[0].ScoreE9Part=table->CurScoreE9;
++    score::set(table->CurScoreStruct,table->CurScore);
++    score::update(table->CurScoreStruct);
++    table->ChangeBallCount(std::max(1,std::min(lives,3)));
++    table->PlayerScores[0].BallCount=table->BallCount;
++    const char* names[]={"middle_circle","outer_circle"};
++    const int counts[]={std::max(1,std::min(rank,9)),std::max(0,std::min(progress,24))};
++    for(int i=0;i<2;++i) {
++        auto group=table->find_component(names[i]);
++        if(!group) continue;
++        group->Message(34,0.0f);
++        group->Message(0,0.0f);
++        for(int j=0;j<counts[i];++j) group->Message(32,0.0f);
++    }
++}
++EMSCRIPTEN_KEEPALIVE void cadet_input(int action, int down) {
++    if (!ready || action < 0 || action > 5 || (down && requestedPause)) return;
++    if (held[action] == (down != 0)) return;
++    held[action] = down != 0;
++    if (down) { Sound::Activate(); pb::keydown(keyFor(action)); }
++    else pb::keyup(keyFor(action));
++}
++EMSCRIPTEN_KEEPALIVE void cadet_set_paused(int paused) {
++    requestedPause = paused != 0;
++    if (!ready) return;
++    if (requestedPause) releaseAll();
++    if ((winmain::single_step != 0) != requestedPause) pb::pause_continue();
++    lastTick = emscripten_get_now();
++    remainderMs = 0;
++    if(loopRegistered) {
++        if(requestedPause && !loopSleeping) { emscripten_pause_main_loop(); loopSleeping=true; }
++        else if(!requestedPause && loopSleeping) { loopSleeping=false; emscripten_resume_main_loop(); }
++    }
++}
++EMSCRIPTEN_KEEPALIVE void cadet_set_muted(int muted) {
++    if (!ready) return;
++    options::Options.Sounds = muted ? 0 : 1;
++    Sound::Enable(0, 7, options::Options.Sounds);
++}
++EMSCRIPTEN_KEEPALIVE const char* cadet_snapshot() {
++    if (!ready || !pb::MainTable) return "{\"ready\":false}";
++    auto table = pb::MainTable;
++    auto mission = table->find_component("lite198");
++    SDL_RendererInfo rendererInfo{};
++    SDL_GetRendererInfo(winmain::Renderer,&rendererInfo);
++    std::ostringstream out;
++    out << "{\"ready\":true,\"renderer\":" << quote(rendererInfo.name) << ",\"score\":" << (static_cast<long long>(table->CurScoreE9)*1000000000LL+table->CurScore)
++        << ",\"lives\":" << table->BallCount << ",\"extraBalls\":" << table->ExtraBalls
++        << ",\"gameover\":" << (pb::game_mode == 2 ? "true" : "false")
++        << ",\"paused\":" << (requestedPause ? "true" : "false")
++        << ",\"gameMode\":" << pb::game_mode << ",\"rank\":" << countLights("middle_circle")
++        << ",\"rankProgress\":" << countLights("outer_circle")
++        << ",\"missionId\":" << (mission ? mission->MessageField : 0)
++        << ",\"mission\":" << quote(textOf(pinball::MissTextBox))
++        << ",\"info\":" << quote(textOf(pinball::InfoTextBox))
++        << ",\"tilted\":" << (table->TiltLockFlag ? "true" : "false")
++        << ",\"multiplier\":" << table->ScoreMultiplier
++        << ",\"plungerBoost\":" << table->Plunger->Boost
++        << ",\"plungerMax\":" << table->Plunger->MaxPullback
++        << ",\"plungerIncrement\":" << table->Plunger->PullbackIncrement
++        << ",\"components\":" << table->ComponentList->GetCount()
++        << ",\"elapsedMs\":" << pb::time_ticks << ",\"ticks\":" << ticks
++        << ",\"tableRect\":{\"x\":0,\"y\":0,\"width\":" << table->Width << ",\"height\":" << table->Height << "}"
++        << ",\"left\":" << table->FlipperL->FlipperEdge->flipper_angle(pb::time_now)
++        << ",\"right\":" << table->FlipperR->FlipperEdge->flipper_angle(pb::time_now)
++        << ",\"inputs\":[";
++    for (int i=0;i<6;++i) { if(i) out << ','; out << (held[i] ? "true" : "false"); }
++    out << "],\"balls\":[";
++    for(int i=0;i<table->BallList->GetCount();++i) {
++        auto ball=table->BallList->Get(i); if(i) out << ',';
++        out << "{\"active\":" << (ball->ActiveFlag ? "true" : "false") << ",\"x\":" << ball->Position.X << ",\"y\":" << ball->Position.Y << ",\"z\":" << ball->Position.Z << ",\"speed\":" << ball->Speed << ",\"vx\":" << ball->Acceleration.X * ball->Speed << ",\"vy\":" << ball->Acceleration.Y * ball->Speed << '}';
++    }
++    out << "]}";
++    snapshot=out.str();
++    return snapshot.c_str();
++}
++}
++
++void cadet_start_web_loop() {
++    SDL_SetWindowSize(winmain::MainWindow, pb::MainTable->Width, pb::MainTable->Height);
++    EM_ASM({Module.canvas.width=$0; Module.canvas.height=$1;}, pb::MainTable->Width, pb::MainTable->Height);
++    options::Options.Players = 1;
++    options::Options.Music = 0;
++    ready = true;
++    cadet_set_paused(requestedPause);
++    // RAF chooses display cadence; simulation uses elapsed wall-clock time.
++    loopRegistered=true;
++    emscripten_set_main_loop(tick, 0, true);
++}
+diff --git a/SpaceCadetPinball/pb.cpp b/SpaceCadetPinball/pb.cpp
+index 4b7f036..b16273e 100644
+--- a/SpaceCadetPinball/pb.cpp
++++ b/SpaceCadetPinball/pb.cpp
+@@ -76,7 +76,10 @@ int pb::init()
+ 		zScaler = cameraInfo[2];
+ 	}
+ 	
+-	render::init(nullptr, zMin, zScaler, resInfo->TableWidth, resInfo->TableHeight);
++	// CC0/Open Cadet data can have a taller playfield than the legacy window.
++    auto playfieldBmp = record_table->GetBitmap(record_table->record_labeled("table"));
++    render::init(nullptr, zMin, zScaler, resInfo->TableWidth,
++                 std::max(static_cast<int>(resInfo->TableHeight), playfieldBmp->Height));
+ 	gdrv::copy_bitmap(
+ 		&render::vscreen,
+ 		backgroundBmp->Width,
+diff --git a/SpaceCadetPinball/render.cpp b/SpaceCadetPinball/render.cpp
+index b5f2e88..d06cb32 100644
+--- a/SpaceCadetPinball/render.cpp
++++ b/SpaceCadetPinball/render.cpp
+@@ -639,5 +639,10 @@ void render::BlitVScreen()
+ void render::PresentVScreen()
+ {
+ 	BlitVScreen();
+-	SDL_RenderCopy(winmain::Renderer, vScreenTex, nullptr, &DestinationRect);
++	#ifdef __EMSCRIPTEN__
++    SDL_Rect tableRect{0, 0, pb::MainTable->Width, pb::MainTable->Height};
++    SDL_RenderCopy(winmain::Renderer, vScreenTex, &tableRect, nullptr);
++#else
++    SDL_RenderCopy(winmain::Renderer, vScreenTex, nullptr, &DestinationRect);
++#endif
+ }
+diff --git a/SpaceCadetPinball/winmain.cpp b/SpaceCadetPinball/winmain.cpp
+index 4f78055..c3ab154 100644
+--- a/SpaceCadetPinball/winmain.cpp
++++ b/SpaceCadetPinball/winmain.cpp
+@@ -15,6 +15,7 @@
+ #ifdef __EMSCRIPTEN__
+ #include <emscripten.h>
+ #include <unistd.h>
++extern void cadet_start_web_loop();
+ #endif
+ 
+ SDL_Window *winmain::MainWindow = nullptr;
+@@ -121,7 +122,11 @@ int winmain::WinMain(LPCSTR lpCmdLine)
+ 	SDL_Renderer *renderer = SDL_CreateRenderer(
+ 		window,
+ 		-1,
+-		SDL_RENDERER_ACCELERATED);
++		#ifdef __EMSCRIPTEN__
++        SDL_RENDERER_SOFTWARE);
++#else
++        SDL_RENDERER_ACCELERATED);
++#endif
+ 	Renderer = renderer;
+ 	if (!renderer)
+ 	{
+@@ -191,6 +196,9 @@ int winmain::WinMain(LPCSTR lpCmdLine)
+ 	else
+ 		pb::replay_level(0);
+ 
++#ifdef __EMSCRIPTEN__
++    cadet_start_web_loop();
++#else
+ 	DWORD dtHistoryCounter = 300u, updateCounter = 0, frameCounter = 0;
+ 
+ 	auto frameStart = Clock::now();
+@@ -326,6 +334,8 @@ int winmain::WinMain(LPCSTR lpCmdLine)
+ 		}
+ 	});
+ 
++#endif
++
+ 	gdrv::destroy_bitmap(&gfr_display);
+ 	options::uninit();
+ 	midi::music_shutdown();
+@@ -707,6 +717,10 @@ int winmain::event_handler(const SDL_Event *event)
+ 			break;
+ 		case SDL_WINDOWEVENT_FOCUS_LOST:
+ 		case SDL_WINDOWEVENT_HIDDEN:
++#ifdef __EMSCRIPTEN__
++            // Host owns pause; its touch buttons are outside the canvas iframe.
++            break;
++#endif
+ 			activated = 0;
+ 			fullscrn::activate(0);
+ 			options::Options.FullScreen = 0;

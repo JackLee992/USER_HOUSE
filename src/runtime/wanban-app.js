@@ -4,7 +4,7 @@ import { DEFAULT_LINES, PROMPT_TEMPLATES } from './wanban-prompts.js';
 import { createZumaGame } from '../games/zuma.js';
 import { createWaterSortGame } from '../games/water-sort.js';
 import { createFreeCellGame } from '../games/freecell.js';
-import { createPinballGame } from '../games/pinball.js';
+import { createSpaceCadetGame as createPinballGame, validCadetProgress } from '../games/space-cadet.js';
 import { createMatch3Game } from '../games/match3.js';
 
 // Runtime migrated from 益智小游戏/玩伴小屋V1.0.1.json.
@@ -99,6 +99,8 @@ export async function initWanbanXiaowu() {
   const STORAGE_WORD_GUESS_BANK_FILTER = SCRIPT_ID + '_wordGuessBankFilter_v1';
   const WORD_GUESS_DEFAULT_BANK_URL = new URL('./wanban-wordguess-bank.txt', import.meta.url).href;
   const EXTENSION_UPDATE_FALLBACKS = ['/USER_HOUSE', '/wanban-xiaowu'];
+  const EXTENSION_UPDATE_REPOSITORY = 'https://github.com/JackLee992/USER_HOUSE';
+  const EXTENSION_UPDATE_BRANCH = 'main';
   let updateCheckStarted = false;
   let updateState = { checking:false, updating:false, checked:false, available:false, updated:false, error:'', data:null };
   const FLAG = SCRIPT_ID + '_Loaded_v2_0_4';
@@ -295,7 +297,7 @@ export async function initWanbanXiaowu() {
     screw: '每局会选择普通模式或无尽模式，并保证每种颜色螺丝数量为3的倍数、工具盒数量正确。顶部同时出现3个随机颜色工具盒，点击可见螺丝后，同色螺丝进入对应工具盒；非当前盒颜色会进入5格临时托盘。任意工具盒收满3颗会自动打包并刷新下一个颜色。上层面板会遮挡下层螺丝；板件剩一个螺丝时会悬挂摆动，失去全部螺丝后受重力下落。普通模式清空全部面板即可过关，无尽模式会在快结束时续上下一批。',
     popstar: '10×10彩色星星棋盘。点击2个及以上上下左右相连的同色星星即可消除，得分为消除数量×消除数量×5，8/12/16个以上大块会有额外奖励。困难模式每关有步数限制，消除、打乱、单消都会消耗1步；简单模式没有步数限制，可以一直消到没有可消除组合。无可消除组合或困难模式步数用完时本关结算，剩余10个以内有少量奖励；如果无可消除组合且还剩步数，会按未用步数奖励。累计分数达到当前关目标就进入下一关，否则游戏结束。',
     paopao: '交错网格泡泡射击。按住或拖动瞄准，松开发射；泡泡会在左右墙反弹，撞到天花板或现有泡泡后吸附到最近空槽。3个及以上同色相连会消除，不再连着顶部的泡泡会掉落得分。初始每发射10次顶部压下一行，每下压3行后间隔减少1次，最低固定为5次；场上只剩5个以内会立刻补压一行。任意泡泡越过红色警戒线即结束。每局有5个炸弹，炸弹会消除落点周围3格泡泡。',
-    pinball: '经典桌面弹球核心玩法：按住发射蓄力，松手出球。触屏左右按钮或键盘左右方向键控制挡板，空格控制发射。撞击弹跳器和目标得分，球落入底部出球口扣一球，三球用尽结算。可暂停和继续保存的球局。',
+    pinball: '完整 Space Cadet 球台：长按约3秒蓄力，松手发射；左右触控按钮或方向键控制挡板，空格发射。击中任务靶后上左侧坡道接受任务，利用虫洞、超空间和燃料通道得分晋级。连续震台会 TILT。三球用尽结算；同页返回可继续完整球局，刷新后只保留分数、常规球数和军衔，从新球开始。',
     match3: '交换相邻两颗宝石，横竖连续3颗及以上同色宝石消除。无效交换不扣步数；消除后下落补齐并可连续连锁，4连5连有奖励。有限步数内达到目标分进入下一关，没有可用交换时自动重排。点击两颗宝石或滑动交换，提示按钮标出可行走法。',
     freecell: '经典空当接龙：52张牌分为8列，4个空当可暂存单牌，4个收牌区按同花色A至K递增。列内按红黑交替递减，可移动长度受空当和空列限制。点击源牌再点击目标，使用提示或撤销；全部收齐获胜。',
     zuma: '青蛙位于轨道中央，按住棋盘瞄准、拖动调整方向，松手后吐出彩珠；发射瞬间青蛙口中的珠子会立即切换为下一颗。整局只有一条持续运动的珠链，没有关卡或轮次；入口会按珠链前进距离持续补入新珠子，累计生成后颜色从4种逐步增加到最多6种。彩珠撞到珠链后会插入，连续3颗及以上同色珠会先膨胀爆裂并淡出，随后前方珠链平滑回退；回退接合后如果再次凑成同色三消，会继续播放爆裂和回退连锁。清空整条珠链奖励600分，之后仍会继续生成新珠子，只有珠链进入终点洞口才结束。珠链较短时会适当减速；速度也会按每450分、累计消除22颗以及当前超过24颗的珠链数量继续提升，最高84。下方炸弹可炸掉命中点附近5颗珠，减速可让珠链减速8秒，彩虹珠会变成命中珠子的颜色。',
@@ -461,7 +463,6 @@ export async function initWanbanXiaowu() {
       if (!name.startsWith('/')) name = '/' + name;
       if (!out.includes(name)) out.push(name);
     };
-    EXTENSION_UPDATE_FALLBACKS.forEach(add);
     try {
       const raw = decodeURIComponent(String(import.meta.url || '')).replace(/\\/g, '/');
       const match = raw.match(/(?:^|\/)public\/scripts\/extensions\/third-party\/([^/]+)/i)
@@ -471,17 +472,24 @@ export async function initWanbanXiaowu() {
         || raw.match(/(?:^|\/)third-party\/([^/]+)/i);
       if (match) add(match[1]);
     } catch(e) {}
+    // A renamed installation must update its own directory, not another copy.
+    if (!out.length) EXTENSION_UPDATE_FALLBACKS.forEach(add);
     return out;
   }
-  async function requestExtensionApi(endpoint, extensionName) {
+  async function requestExtensionApi(endpoint, installation, extra) {
+    const extensionName = installation.extensionName;
     const res = await fetch('/api/extensions/' + endpoint, {
       method:'POST',
       headers:extensionUpdateHeaders(),
-      body:JSON.stringify({ extensionName, global:false }),
+      body:JSON.stringify(Object.assign({ extensionName, global:!!installation.global }, extra)),
     });
-    if (!res.ok) throw new Error((await res.text()) || res.statusText || endpoint + ' failed');
+    if (!res.ok) {
+      const error = new Error((await res.text()).slice(0, 240) || res.statusText || endpoint + ' failed');
+      error.status = res.status; throw error;
+    }
+    if (res.status === 204) return null;
     const data = await res.json();
-    if (data) data.extensionName = extensionName;
+    if (data && !Array.isArray(data)) Object.assign(data, { extensionName, global:!!installation.global });
     return data;
   }
   function normalizeGitRemoteUrl(url) {
@@ -489,28 +497,49 @@ export async function initWanbanXiaowu() {
     if (!raw) return '';
     const ssh = raw.match(/^git@([^:]+):(.+)$/);
     if (ssh) raw = 'https://' + ssh[1] + '/' + ssh[2];
-    raw = raw.replace(/\.git(?:[#?].*)?$/, '').replace(/\/$/, '');
+    raw = raw.replace(/\/$/, '').replace(/\.git(?:[#?].*)?$/, '');
     return raw;
   }
   function remoteManifestUrl(data) {
-    const remote = normalizeGitRemoteUrl(data && data.remoteUrl);
-    const branch = encodeURIComponent((data && data.currentBranchName) || 'main');
-    if (!remote) return '';
-    let url = null;
-    try { url = new URL(remote); } catch(e) { return ''; }
-    const path = url.pathname.replace(/^\/+|\/+$/g, '').replace(/\.git$/, '');
-    if (!path) return '';
-    if (/github\.com$/i.test(url.hostname)) return 'https://raw.githubusercontent.com/' + path + '/' + branch + '/manifest.json';
-    if (/gitlab\.com$/i.test(url.hostname)) return url.origin + '/' + path + '/-/raw/' + branch + '/manifest.json';
-    return '';
+    if (normalizeGitRemoteUrl(data && data.remoteUrl).toLowerCase() !== EXTENSION_UPDATE_REPOSITORY.toLowerCase()) return '';
+    return 'https://raw.githubusercontent.com/JackLee992/USER_HOUSE/' + EXTENSION_UPDATE_BRANCH + '/manifest.json';
+  }
+  function validateExtensionUpdateSource(data) {
+    if (!data || typeof data.isUpToDate !== 'boolean' || !data.currentCommitHash || !data.currentBranchName || !data.remoteUrl) {
+      throw new Error('此安装没有可更新的 Git 仓库信息，请从酒馆扩展管理检查安装状态。');
+    }
+    if (!remoteManifestUrl(data)) throw new Error('当前安装来源不是 ' + EXTENSION_UPDATE_REPOSITORY + '，无法通过本按钮更新其他仓库。');
+    return data;
+  }
+  async function readInstalledExtensionVersion() {
+    let discovered = null;
+    try {
+      const response = await fetch('/api/extensions/discover', { headers:extensionUpdateHeaders(), cache:'no-store' });
+      if (response.ok) { const entries = await response.json(); if (Array.isArray(entries)) discovered = entries; }
+    } catch(e) {}
+    let lastError = null;
+    for (const name of extensionUpdateCandidates()) {
+      const folder = name.replace(/^\/+/, '');
+      const known = discovered && discovered.find(item => item.name === 'third-party/' + folder);
+      const scopes = known ? [known.type === 'global'] : [false, true];
+      for (const global of scopes) {
+        try { return validateExtensionUpdateSource(await requestExtensionApi('version', { extensionName:folder, global })); }
+        catch(e) { lastError = e; if (e.status !== 404) throw e; }
+      }
+    }
+    throw lastError || new Error('酒馆未找到当前扩展目录。');
   }
   async function fetchRemoteExtensionVersion(data) {
     const url = remoteManifestUrl(data);
     if (!url) return '';
-    const res = await fetch(url, { cache:'no-store' });
-    if (!res.ok) throw new Error('remote manifest failed');
-    const manifest = await res.json();
-    return String(manifest && manifest.version ? manifest.version : '').trim();
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const res = await fetch(url, { cache:'no-store', signal:controller.signal });
+      if (!res.ok) throw new Error('remote manifest failed');
+      const manifest = await res.json();
+      return String(manifest && manifest.version ? manifest.version : '').trim();
+    } finally { clearTimeout(timer); }
   }
   function updatePanelHTML() {
     const data = updateState.data || {};
@@ -519,16 +548,17 @@ export async function initWanbanXiaowu() {
     let cls = 'idle';
     if (updateState.checking) { status = '正在检查更新...'; cls = 'busy'; }
     else if (updateState.updating) { status = '正在更新插件，请稍候...'; cls = 'busy'; }
-    else if (updateState.updated) { status = '更新完成，重启酒馆后生效。'; cls = 'done'; }
-    else if (updateState.error) { status = '检查更新失败'; cls = 'error'; }
-    else if (updateState.available) { status = '发现新版本：' + remote; cls = 'available'; }
+    else if (updateState.error) { status = updateState.error; cls = 'error'; }
+    else if (updateState.updated) { status = '文件已更新，刷新页面后生效；存档和设置保留。'; cls = 'done'; }
+    else if (updateState.available) { status = data.switchRequired ? '可切换至主分支并更新：' + remote : '发现新版本：' + remote; cls = 'available'; }
     else if (updateState.checked) { status = '当前已更新至最新版本'; cls = 'ok'; }
     const busyAttr = (updateState.checking || updateState.updating) ? 'disabled' : '';
     return '<div class="wb-panel wb-update-panel ' + cls + '" id="wb-update-panel">'
-      + '<div class="wb-update-row"><span>' + esc(status) + '</span>'
+      + '<div class="wb-update-row"><span title="' + esc(status) + '">' + esc(status) + '</span>'
       + '<button class="wb-btn wb-update-icon" id="wb-check-update" title="检查更新" aria-label="检查更新" ' + busyAttr + '><i class="fa-solid fa-rotate-right"></i></button>'
       + (updateState.available ? '<button class="wb-btn primary wb-update-icon" id="wb-run-update" title="更新插件" aria-label="更新插件" ' + (updateState.updating ? 'disabled' : '') + '><i class="fa-solid fa-download"></i></button>' : '')
-      + '</div></div>';
+      + (updateState.updated ? '<button class="wb-btn primary" id="wb-reload-update" ' + busyAttr + '>刷新生效</button>' : '')
+      + '</div><div class="wb-muted" style="font-size:11px;margin-top:4px;overflow-wrap:anywhere">更新源：JackLee992/USER_HOUSE · main' + (updateState.error ? '<br>' + esc(updateState.error) : '') + '</div></div>';
   }
   function syncUpdateNoticeClass() {
     qsa('.wb-tab[data-tab="settings"]').forEach(btn => btn.classList.toggle('update-available', !!updateState.available));
@@ -536,6 +566,7 @@ export async function initWanbanXiaowu() {
   function bindUpdatePanelEvents() {
     const check = qs('#wb-check-update'); if (check) check.onclick = () => checkExtensionUpdate(true);
     const run = qs('#wb-run-update'); if (run) run.onclick = runExtensionUpdate;
+    const reload = qs('#wb-reload-update'); if (reload) reload.onclick = () => { saveBeforeExtensionUpdate(); getHostWindow().location.reload(); };
     syncUpdateNoticeClass();
   }
   function refreshUpdatePanel() {
@@ -550,16 +581,12 @@ export async function initWanbanXiaowu() {
     updateState = Object.assign({}, updateState, { checking:true, checked:false, error:'' });
     refreshUpdatePanel();
     try {
-      let data = null, lastError = null;
-      for (const name of extensionUpdateCandidates()) {
-        try { data = await requestExtensionApi('version', name); break; }
-        catch(e) { lastError = e; }
-      }
-      if (!data && lastError) throw lastError;
-      if (data && data.isUpToDate === false) {
+      const data = await readInstalledExtensionVersion();
+      data.switchRequired = data.currentBranchName !== EXTENSION_UPDATE_BRANCH;
+      if (data.isUpToDate === false || data.switchRequired) {
         try { data.remoteVersion = await fetchRemoteExtensionVersion(data); } catch(e) { data.remoteVersion = ''; }
       }
-      updateState = { checking:false, updating:false, checked:true, available:data && data.isUpToDate === false, updated:false, error:'', data:data || null };
+      updateState = { checking:false, updating:false, checked:true, available:data.isUpToDate === false || data.switchRequired, updated:updateState.updated, error:'', data };
       if (manual) toast(updateState.available ? ('检测到可用更新' + (data && data.remoteVersion ? '：V' + data.remoteVersion : '')) : '已经是最新版本');
       return data;
     } catch(e) {
@@ -570,15 +597,31 @@ export async function initWanbanXiaowu() {
       refreshUpdatePanel();
     }
   }
+  function saveBeforeExtensionUpdate() {
+    activeGameController?.save?.();
+    flushAllProgressSaves();
+    flushSettingsProgress();
+  }
   async function runExtensionUpdate() {
     if (updateState.updating || updateState.checking) return;
     updateState = Object.assign({}, updateState, { updating:true, error:'' });
     refreshUpdatePanel();
     try {
-      const name = (updateState.data && updateState.data.extensionName) || extensionUpdateCandidates()[0];
-      const data = await requestExtensionApi('update', name);
-      updateState = { checking:false, updating:false, checked:true, available:false, updated:!(data && data.isUpToDate), error:'', data:data || updateState.data };
-      toast(data && data.isUpToDate ? '已经是最新版本' : '更新完成，请重启酒馆后生效');
+      saveBeforeExtensionUpdate();
+      const before = await readInstalledExtensionVersion();
+      if (before.currentBranchName !== EXTENSION_UPDATE_BRANCH) {
+        const branches = await requestExtensionApi('branches', before);
+        if (!Array.isArray(branches) || !branches.some(branch => branch.name === 'origin/' + EXTENSION_UPDATE_BRANCH)) throw new Error('远端主分支不存在，尚未更改安装。');
+        await requestExtensionApi('switch', before, { branch:'origin/' + EXTENSION_UPDATE_BRANCH });
+      }
+      await requestExtensionApi('update', before);
+      // SillyTavern's update response reports the status BEFORE its pull.
+      // Verify the actual installed branch and commit with a fresh version call.
+      const data = validateExtensionUpdateSource(await requestExtensionApi('version', before));
+      if (data.currentBranchName !== EXTENSION_UPDATE_BRANCH || data.isUpToDate !== true) throw new Error('更新后校验未通过，请重试；尚未确认文件已是主分支最新版。');
+      const changed = before.currentCommitHash !== data.currentCommitHash || before.currentBranchName !== data.currentBranchName;
+      updateState = { checking:false, updating:false, checked:true, available:false, updated:changed || updateState.updated, error:'', data };
+      toast(updateState.updated ? '更新完成，点击“刷新生效”；无需卸载，存档和设置保留。' : '已经是主分支最新版本');
     } catch(e) {
       updateState = Object.assign({}, updateState, { updating:false, error:'更新失败：' + (e && e.message ? e.message : e) });
       toast(updateState.error);
@@ -944,7 +987,7 @@ export async function initWanbanXiaowu() {
     if (game === 'screw') return !!(state.panels && state.panels.some(p => !p.gone)) || !!(state.tray && state.tray.length);
     if (game === 'popstar') return !!state.score || Number(state.level || 1) > 1 || !!(state.board && state.board.some(row => row && row.some(Boolean)));
     if (game === 'paopao') return !!state.score || !!state.shots || !!(state.bubbles && state.bubbles.length); 
-    if (game === 'pinball') return state.version === 1 && state.lives > 0 && state.phase !== 'over';
+    if (game === 'pinball') return validCadetProgress(state);
     if (game === 'match3') return !!(state.board && state.board.length === 8 && state.board.every(row => Array.isArray(row) && row.length === 8) && state.moves > 0);
     if (game === 'freecell') return !!(state.columns && state.columns.length === 8);
     if (game === 'zuma') return !!state.score || !!(state.details && (state.details.shots || state.details.totalBallsGenerated)) || !!(state.chain && state.chain.length);
