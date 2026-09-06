@@ -36,3 +36,5 @@ node tests/manual/native-extension-update.mjs /path/to/SillyTavern /path/to/depe
 ## 发布后更新验证
 
 3.9.0 发布后再次使用官方酒馆路由，已将真实安装从 main@4324766（3.8.0）原地拉取到 main@955ae37（3.9.0），返回版本、实际HEAD和origin/main完全一致；没有调用卸载或安装接口。记录见 [3.8 → 3.9 实际更新](evidence/native-update-to-3.9.json)。
+
+3.10.0 同样通过官方酒馆路由，将隔离安装从 `main@955ae37`（3.9.0）原地升级到 `main@24b8269`（3.10.0）。实际 Git HEAD、远程主分支和接口返回一致，调用顺序为 discover → version → update → version，没有安装或卸载。见 [3.9 → 3.10 实际更新](evidence/v3.10/native-update-to-3.10.json)。测试主机首次 GitHub TLS 连接失败，重试仅对本次 Git 进程固定 GitHub DNS 解析并保持证书验证；没有修改插件或用户网络配置。

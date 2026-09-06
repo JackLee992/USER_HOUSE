@@ -43,3 +43,5 @@ node tests/browser/android-match3-enhancements.mjs /path/to/evidence
 <img src="evidence/v3.10/via-cadet-hd-expanded.png" width="360" alt="Via模拟器中的高清放大弹球">
 <img src="evidence/v3.10/via-match3-ice-mode.png" width="360" alt="Via中的破冰挑战">
 <img src="evidence/v3.10/via-freecell-followup-group-device.png" width="360" alt="Via中的随步归档与整步撤回">
+
+发布后已通过官方酒馆路由，将实际隔离的3.9.0插件副本更新到本版代码提交 `24b8269`，确认版本3.10.0与远程main一致，无卸载/安装调用。见 [原地更新记录](evidence/v3.10/native-update-to-3.10.json)。
