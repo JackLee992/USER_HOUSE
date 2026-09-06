@@ -27,11 +27,11 @@ await new Promise(resolve => server.once('listening',resolve));
 const address = `http://127.0.0.1:${server.address().port}`;
 const extension = path.join(fixtureRoot,'USER_HOUSE');
 const gitRead = (...args) => execFileSync('git',['-C',extension,...args],{encoding:'utf8'}).trim();
-const before = {branch:gitRead('branch','--show-current'),commit:gitRead('rev-parse','HEAD'),remote:gitRead('remote','get-url','origin')};
+const before = {branch:gitRead('branch','--show-current'),commit:gitRead('rev-parse','HEAD'),remote:gitRead('remote','get-url','origin'),manifestVersion:JSON.parse(fs.readFileSync(path.join(extension,'manifest.json'),'utf8')).version};
 const runtime = fs.readFileSync(new URL('../../src/runtime/wanban-app.js',import.meta.url),'utf8');
 const updater = runtime.slice(runtime.indexOf('  function extensionUpdateHeaders()'),runtime.indexOf('  function companionDockSide(')).replaceAll('import.meta.url','__moduleUrl');
 const requests = [], messages = [], saves = [];
-const context = vm.createContext({URL,console,EXTENSION_VERSION:'3.8.0',EXTENSION_UPDATE_FALLBACKS:['/USER_HOUSE'],
+const context = vm.createContext({URL,console,EXTENSION_VERSION:before.manifestVersion,EXTENSION_UPDATE_FALLBACKS:['/USER_HOUSE'],
   EXTENSION_UPDATE_REPOSITORY:'https://github.com/JackLee992/USER_HOUSE',EXTENSION_UPDATE_BRANCH:'main',
   __moduleUrl:address+'/scripts/extensions/third-party/USER_HOUSE/src/runtime/wanban-app.js',
   updateState:{checking:false,updating:false,checked:false,available:false,updated:false,error:'',data:null},

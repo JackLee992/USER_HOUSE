@@ -1,9 +1,10 @@
+import {createCadetDisplay} from './display.js';
 /* The engine lives in a same-origin iframe; each new game owns one WASM instance. */
 (() => {
   'use strict';
   const session = new URLSearchParams(location.search).get('session');
   const canvas = document.querySelector('canvas');
-  let started = false, ready = false, timer = null, lastSnapshot = null;
+  let started = false, ready = false, timer = null, lastSnapshot = null, display = null;
   const send = (type, payload = {}) => parent.postMessage({channel:'wb-cadet', session, type, ...payload}, location.origin);
   const call = (name, returnType, types = [], args = []) => Module.ccall(`cadet_${name}`, returnType, types, args);
   const fail = error => send('error', {message:String(error?.message || error)});
@@ -24,8 +25,10 @@
   function initialize(config) {
     if (started) return;
     started = true;
+    display = createCadetDisplay(document.querySelector('#display'), () => window.Module, {useArtwork:!config.files?.length});
     window.Module = {
       canvas,
+      cadetPresent:(...args) => display.present(...args),
       locateFile:path => new URL(path, location.href).href,
       preRun:[() => {
         for (const file of config.files || []) {
@@ -77,7 +80,7 @@
       if (m.type === 'snapshot') snapshot();
     } catch (error) { fail(error); }
   });
-  addEventListener('pagehide', () => { clearInterval(timer); if (ready) call('set_paused', null, ['number'], [1]); });
+  addEventListener('pagehide', () => { clearInterval(timer); display?.destroy(); if (ready) call('set_paused', null, ['number'], [1]); });
   addEventListener('error', event => fail(event.message));
   canvas.addEventListener('contextmenu', event => event.preventDefault());
   // Only read-only inspection is exposed to the Android integration test.
@@ -92,6 +95,8 @@
       call('input', null, ['number','number'], [action,down ? 1 : 0]);
     },
     mute(value) { if (ready) call('set_muted', null, ['number'], [value ? 1 : 0]); },
+    quality(value) { display?.quality(value); },
+    displayInspection() { return display?.inspection(); },
   };
   send('boot');
 })();

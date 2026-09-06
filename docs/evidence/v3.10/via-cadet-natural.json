@@ -1,0 +1,258 @@
+{
+  "checks": [],
+  "samples": [
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 0,
+      "lives": 3,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "Awaiting Deployment",
+      "info": "Continue Play",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 112,
+      "ticks": 14,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": -0.8,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 35750,
+      "lives": 2,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Crash Bonus\n10000",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 46064,
+      "ticks": 5758,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 149250,
+      "lives": 1,
+      "extraBalls": 0,
+      "gameover": false,
+      "paused": false,
+      "gameMode": 1,
+      "rank": 1,
+      "rankProgress": 0,
+      "missionId": 0,
+      "mission": "",
+      "info": "Ship Re-Fueled",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 90784,
+      "ticks": 11348,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "renderer": "software",
+      "score": 199750,
+      "lives": 0,
+      "extraBalls": 0,
+      "gameover": true,
+      "paused": true,
+      "gameMode": 2,
+      "rank": 4,
+      "rankProgress": 5,
+      "missionId": 32,
+      "mission": "",
+      "info": "Game Paused\nF3 to Resume",
+      "tilted": false,
+      "multiplier": 0,
+      "plungerBoost": 0,
+      "plungerMax": 100,
+      "plungerIncrement": 1,
+      "components": 343,
+      "elapsedMs": 111000,
+      "ticks": 13875,
+      "tableRect": {
+        "x": 0,
+        "y": 0,
+        "width": 365,
+        "height": 470
+      },
+      "left": 0,
+      "right": 0,
+      "inputs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "balls": [
+        {
+          "active": false,
+          "x": 0,
+          "y": 0,
+          "z": 0.3,
+          "speed": 0,
+          "vx": 0,
+          "vy": 0
+        }
+      ]
+    }
+  ],
+  "final": {
+    "ready": true,
+    "renderer": "software",
+    "score": 199750,
+    "lives": 0,
+    "extraBalls": 0,
+    "gameover": true,
+    "paused": true,
+    "gameMode": 2,
+    "rank": 4,
+    "rankProgress": 5,
+    "missionId": 32,
+    "mission": "",
+    "info": "Game Paused\nF3 to Resume",
+    "tilted": false,
+    "multiplier": 0,
+    "plungerBoost": 0,
+    "plungerMax": 100,
+    "plungerIncrement": 1,
+    "components": 343,
+    "elapsedMs": 111000,
+    "ticks": 13875,
+    "tableRect": {
+      "x": 0,
+      "y": 0,
+      "width": 365,
+      "height": 470
+    },
+    "left": 0,
+    "right": 0,
+    "inputs": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "balls": [
+      {
+        "active": false,
+        "x": 0,
+        "y": 0,
+        "z": 0.3,
+        "speed": 0,
+        "vx": 0,
+        "vy": 0
+      }
+    ]
+  },
+  "page": "玩伴小屋\n玩伴小屋\n×\n返回\n三维弹球\n💡\n本局：199750\n记录\n继续\n重开\n199,750\n上尉 · 1×\n0 球\n球台加载失败：ResizeObserver loop completed with undelivered notifications.\nHit Mission Targets To Select Mission\nShip Re-Fueled\n◀ 左挡板\n长按蓄力\n右挡板 ▶\n震台\n放大画面\n高清 开\n音效 开\n设置\n弹球结束\n游戏：三维弹球\nSpace Cadet · 本局 199750 分\n最高：763750分\n陪伴者：TA\n开启下一把\n留在本局",
+  "errors": [],
+  "passed": true
+}

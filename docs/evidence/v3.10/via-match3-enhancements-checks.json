@@ -1,0 +1,137 @@
+{
+  "game": "match3-enhancements",
+  "checks": [
+    "native mode selector requires confirmation; cancellation preserves the exact save",
+    "all three modes switch through native touch and restore their own boards; endless accepts a zero-step move",
+    "v3 endless with zero moves survives catalog return and real Continue countdown",
+    "four is manufactured by a real adjacent two-touch exchange (row)",
+    "five is manufactured by a real adjacent two-touch exchange (rainbow)",
+    "L is manufactured by a real adjacent two-touch exchange (bomb)",
+    "T is manufactured by a real adjacent two-touch exchange (bomb)",
+    "hammer targeting can cancel for free; two real hammer taps remove two fixed ice layers and spend 40 coins without moves",
+    "confirmed shuffle spends 15 once, retaining special inventory, score, ice and moves",
+    "finite completed level and wallet survives catalog return and real Continue countdown",
+    "a real scoring exchange earns visible 3 stars and 50 coins; Continue does not reissue the reward",
+    "endless awarded milestone and zero moves survives catalog return and real Continue countdown",
+    "endless milestones award coins from an actual move, persist at zero moves and do not duplicate",
+    "real pause freezes a still-pending special exchange and its rendered transforms; countdown resumes that turn",
+    "failed finite v3 level with wallet and another mode survives catalog return and real Continue countdown",
+    "failed finite level remains resumable and a confirmed retry preserves its wallet and other mode",
+    "End cancellation retains the game; confirmed End opens the real runtime score result"
+  ],
+  "fixtures": [
+    {
+      "name": "four manufacture",
+      "mode": "endless",
+      "moves": 0,
+      "level": 1
+    },
+    {
+      "name": "five manufacture",
+      "mode": "endless",
+      "moves": 0,
+      "level": 1
+    },
+    {
+      "name": "L manufacture",
+      "mode": "endless",
+      "moves": 0,
+      "level": 1
+    },
+    {
+      "name": "T manufacture",
+      "mode": "endless",
+      "moves": 0,
+      "level": 1
+    },
+    {
+      "name": "fixed double ice and paid tools",
+      "mode": "ice",
+      "moves": 28,
+      "level": 1
+    },
+    {
+      "name": "one touch exchange before finite reward",
+      "mode": "classic",
+      "moves": 12,
+      "level": 1
+    },
+    {
+      "name": "one touch exchange before endless reward",
+      "mode": "endless",
+      "moves": 0,
+      "level": 1
+    },
+    {
+      "name": "pause in a pending special exchange",
+      "mode": "endless",
+      "moves": 0,
+      "level": 1
+    },
+    {
+      "name": "failed finite level with other mode progress",
+      "mode": "classic",
+      "moves": 0,
+      "level": 1
+    }
+  ],
+  "shots": [
+    "../artifacts/user-house-via/v3.10/via-match3-modes-ready.png",
+    "../artifacts/user-house-via/v3.10/via-match3-ice-mode.png",
+    "../artifacts/user-house-via/v3.10/via-match3-manufacture-four.png",
+    "../artifacts/user-house-via/v3.10/via-match3-manufacture-five.png",
+    "../artifacts/user-house-via/v3.10/via-match3-manufacture-l.png",
+    "../artifacts/user-house-via/v3.10/via-match3-manufacture-t.png",
+    "../artifacts/user-house-via/v3.10/via-match3-hammer-ice.png",
+    "../artifacts/user-house-via/v3.10/via-match3-earned-reward.png",
+    "../artifacts/user-house-via/v3.10/via-match3-pending-special-paused.png",
+    "../artifacts/user-house-via/v3.10/via-match3-failed-level-restored.png",
+    "../artifacts/user-house-via/v3.10/via-match3-confirmed-end.png"
+  ],
+  "env": {
+    "ua": "Mozilla/5.0 (Linux; Android 15; sdk_gphone64_arm64 Build/AE3A.240806.043) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.219 Mobile Safari/537.36",
+    "width": 412,
+    "height": 746,
+    "dpr": 2.625
+  },
+  "initialLayout": {
+    "viewport": {
+      "width": 412,
+      "height": 746
+    },
+    "overflow": false,
+    "board": {
+      "x": 14.523809432983398,
+      "y": 221.98809814453125,
+      "width": 383.1428527832031,
+      "height": 383.1428527832031
+    },
+    "shell": {
+      "x": 14.523809432983398,
+      "y": 86.57142639160156,
+      "width": 383.1428527832031,
+      "height": 644.4285888671875
+    }
+  },
+  "iceLayout": {
+    "viewport": {
+      "width": 412,
+      "height": 746
+    },
+    "overflow": false,
+    "board": {
+      "x": 14.523809432983398,
+      "y": 221.98809814453125,
+      "width": 383.1428527832031,
+      "height": 383.1428527832031
+    },
+    "shell": {
+      "x": 14.523809432983398,
+      "y": 86.57142639160156,
+      "width": 383.1428527832031,
+      "height": 644.4285888671875
+    }
+  },
+  "errors": [],
+  "passed": true
+}

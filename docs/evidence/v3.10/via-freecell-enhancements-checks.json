@@ -1,0 +1,1015 @@
+{
+  "game": "freecell",
+  "fixtureSource": "/private/tmp/freecell-browser-results.json",
+  "checks": [
+    "a genuinely new random 52-card deal accepts real source/target taps and undo",
+    "real double touch survives selection redraw, homes only the exposed ace, and never collects the newly exposed two",
+    "double touch also homes the specified card from a free cell",
+    "safe archive leaves an unsafe club four; explicit double touch legally homes that exact card",
+    "illegal double touch leaves the previous selection, board, move count and undo history unconsumed",
+    "with another card selected, legal double touch homes only the touched target",
+    "touching the visible strip of a buried ace does not skip its covering card",
+    "one physical safe-archive tap collects all three safe cards; one undo restores the whole batch",
+    "enabling follow-up archive does not move cards; a user move plus its three safe homes is one undo transaction",
+    "runtime pause leaves cards, grouped history and archive preference unchanged",
+    "real pause button resumes through the complete countdown",
+    "returning through the catalog and Continue restores the complete board, auto preference and grouped undo",
+    "continued game accepts the next real move and archives normally"
+  ],
+  "screenshots": [
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-fresh-device.png",
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-doubletap-device.png",
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-safe-batch-device.png",
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-followup-group-device.png",
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-paused-device.png",
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-continued-device.png",
+    "/Users/jacklee/develop/daillyTasks/artifacts/user-house-via/v3.10/via-freecell-final-device.png"
+  ],
+  "fixtures": {
+    "exposedAce": {
+      "columns": [
+        [
+          1,
+          0
+        ],
+        [],
+        [
+          2,
+          8,
+          14,
+          20,
+          26,
+          32,
+          38,
+          44,
+          50
+        ],
+        [
+          3,
+          9,
+          15,
+          21,
+          27,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          4,
+          10,
+          16,
+          22,
+          28,
+          34,
+          40,
+          46
+        ],
+        [
+          5,
+          11,
+          17,
+          23,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          6,
+          12,
+          18,
+          24,
+          30,
+          36,
+          42,
+          48
+        ],
+        [
+          7,
+          13,
+          19,
+          25,
+          31,
+          37,
+          43,
+          49
+        ]
+      ],
+      "freecells": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": false
+    },
+    "freecellAce": {
+      "columns": [
+        [],
+        [],
+        [
+          0,
+          6,
+          12,
+          18,
+          24,
+          31,
+          37,
+          43,
+          49
+        ],
+        [
+          1,
+          7,
+          13,
+          19,
+          25,
+          32,
+          38,
+          44,
+          50
+        ],
+        [
+          2,
+          8,
+          14,
+          20,
+          27,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          3,
+          9,
+          15,
+          21,
+          28,
+          34,
+          40,
+          46
+        ],
+        [
+          4,
+          10,
+          16,
+          22,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          5,
+          11,
+          17,
+          23,
+          30,
+          36,
+          42,
+          48
+        ]
+      ],
+      "freecells": [
+        26,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": false
+    },
+    "unsafeLegal": {
+      "columns": [
+        [
+          3
+        ],
+        [],
+        [
+          4,
+          10,
+          18,
+          24,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          5,
+          11,
+          19,
+          25,
+          34,
+          40,
+          46
+        ],
+        [
+          6,
+          12,
+          20,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          7,
+          15,
+          21,
+          30,
+          36,
+          42,
+          48
+        ],
+        [
+          8,
+          16,
+          22,
+          31,
+          37,
+          43,
+          49
+        ],
+        [
+          9,
+          17,
+          23,
+          32,
+          38,
+          44,
+          50
+        ]
+      ],
+      "freecells": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          26,
+          27,
+          28
+        ],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": false
+    },
+    "illegalWithSelection": {
+      "columns": [
+        [
+          18
+        ],
+        [
+          6
+        ],
+        [
+          0,
+          7,
+          13,
+          20,
+          26,
+          32,
+          38,
+          44,
+          50
+        ],
+        [
+          1,
+          8,
+          14,
+          21,
+          27,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          2,
+          9,
+          15,
+          22,
+          28,
+          34,
+          40,
+          46
+        ],
+        [
+          3,
+          10,
+          16,
+          23,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          4,
+          11,
+          17,
+          24,
+          30,
+          36,
+          42,
+          48
+        ],
+        [
+          5,
+          12,
+          19,
+          25,
+          31,
+          37,
+          43,
+          49
+        ]
+      ],
+      "freecells": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": false
+    },
+    "legalWithSelection": {
+      "columns": [
+        [
+          15
+        ],
+        [
+          3
+        ],
+        [
+          4,
+          10,
+          19,
+          25,
+          31,
+          37,
+          43,
+          49
+        ],
+        [
+          5,
+          11,
+          20,
+          26,
+          32,
+          38,
+          44,
+          50
+        ],
+        [
+          6,
+          12,
+          21,
+          27,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          7,
+          16,
+          22,
+          28,
+          34,
+          40,
+          46
+        ],
+        [
+          8,
+          17,
+          23,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          9,
+          18,
+          24,
+          30,
+          36,
+          42,
+          48
+        ]
+      ],
+      "freecells": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          13,
+          14
+        ],
+        [],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": false
+    },
+    "buriedAce": {
+      "columns": [
+        [
+          0,
+          14
+        ],
+        [],
+        [
+          1,
+          7,
+          13,
+          20,
+          26,
+          32,
+          38,
+          44,
+          50
+        ],
+        [
+          2,
+          8,
+          15,
+          21,
+          27,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          3,
+          9,
+          16,
+          22,
+          28,
+          34,
+          40,
+          46
+        ],
+        [
+          4,
+          10,
+          17,
+          23,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          5,
+          11,
+          18,
+          24,
+          30,
+          36,
+          42,
+          48
+        ],
+        [
+          6,
+          12,
+          19,
+          25,
+          31,
+          37,
+          43,
+          49
+        ]
+      ],
+      "freecells": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": false
+    },
+    "groupedUndo": {
+      "columns": [
+        [
+          1,
+          0
+        ],
+        [
+          13
+        ],
+        [
+          2,
+          8,
+          15,
+          21,
+          27,
+          33,
+          39,
+          45,
+          51
+        ],
+        [
+          3,
+          9,
+          16,
+          22,
+          28,
+          34,
+          40,
+          46
+        ],
+        [
+          4,
+          10,
+          17,
+          23,
+          29,
+          35,
+          41,
+          47
+        ],
+        [
+          5,
+          11,
+          18,
+          24,
+          30,
+          36,
+          42,
+          48
+        ],
+        [
+          6,
+          12,
+          19,
+          25,
+          31,
+          37,
+          43,
+          49
+        ],
+        [
+          7,
+          14,
+          20,
+          26,
+          32,
+          38,
+          44,
+          50
+        ]
+      ],
+      "freecells": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "foundations": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "moves": 0,
+      "history": [],
+      "autoHome": true
+    }
+  },
+  "env": {
+    "ua": "Mozilla/5.0 (Linux; Android 15; sdk_gphone64_arm64 Build/AE3A.240806.043) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.219 Mobile Safari/537.36",
+    "width": 412,
+    "height": 746,
+    "dpr": 2.625
+  },
+  "layout": {
+    "rect": {
+      "x": 14.523809432983398,
+      "y": 86.57142639160156,
+      "width": 383.1428527832031,
+      "height": 644.4285888671875,
+      "top": 86.57142639160156,
+      "right": 397.6666622161865,
+      "bottom": 731.0000152587891,
+      "left": 14.523809432983398
+    },
+    "overflow": false
+  },
+  "final": {
+    "columns": [
+      [],
+      [],
+      [
+        2,
+        8,
+        15,
+        21,
+        27,
+        33,
+        39,
+        45,
+        51
+      ],
+      [
+        3,
+        9,
+        16,
+        22,
+        28,
+        34,
+        40,
+        46
+      ],
+      [
+        4,
+        10,
+        17,
+        23,
+        29,
+        35,
+        41,
+        47
+      ],
+      [
+        5,
+        11,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48
+      ],
+      [
+        6,
+        12,
+        19,
+        25,
+        31,
+        37,
+        43,
+        49
+      ],
+      [
+        7,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50
+      ]
+    ],
+    "freecells": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "foundations": [
+      [
+        0,
+        1
+      ],
+      [
+        13
+      ],
+      [],
+      []
+    ],
+    "moves": 1,
+    "autoHome": true,
+    "history": [
+      {
+        "columns": [
+          [
+            1,
+            0
+          ],
+          [
+            13
+          ],
+          [
+            2,
+            8,
+            15,
+            21,
+            27,
+            33,
+            39,
+            45,
+            51
+          ],
+          [
+            3,
+            9,
+            16,
+            22,
+            28,
+            34,
+            40,
+            46
+          ],
+          [
+            4,
+            10,
+            17,
+            23,
+            29,
+            35,
+            41,
+            47
+          ],
+          [
+            5,
+            11,
+            18,
+            24,
+            30,
+            36,
+            42,
+            48
+          ],
+          [
+            6,
+            12,
+            19,
+            25,
+            31,
+            37,
+            43,
+            49
+          ],
+          [
+            7,
+            14,
+            20,
+            26,
+            32,
+            38,
+            44,
+            50
+          ]
+        ],
+        "freecells": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "foundations": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "moves": 0,
+        "autoHome": true
+      }
+    ]
+  },
+  "events": [
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "39",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "undo"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 2,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "undo"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "26",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 2,
+      "card": "26",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "auto-home"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "3",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 2,
+      "card": "3",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "18",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "6",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 2,
+      "card": "6",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "15",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "3",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 2,
+      "card": "3",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 2,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "auto-home"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "undo"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "toggle-auto"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "undo"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": "undo"
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": "0",
+      "action": null
+    },
+    {
+      "type": "click",
+      "detail": 1,
+      "card": null,
+      "action": null
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

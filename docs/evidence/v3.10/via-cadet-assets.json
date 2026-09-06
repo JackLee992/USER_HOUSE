@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "file input handler validates and stores real CC0 DAT; returning cannot resurrect old progress",
+    "stored DAT loads complete engine and removes generated texture override",
+    "reset to built-in artwork reloads bundled texture and HD display"
+  ],
+  "imported": {
+    "components": 343,
+    "hasOverride": false,
+    "size": 911260
+  },
+  "errors": [],
+  "passed": true
+}

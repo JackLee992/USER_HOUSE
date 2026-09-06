@@ -1,0 +1,65 @@
+{
+  "checks": [
+    "HD artwork remains 1105px source and >950 device pixels on normal phone view",
+    "expanded view enlarges whole table, keeps controls inside screen and preserves live game",
+    "HD/classic and expanded/normal can switch while paused without advancing native physics",
+    "HD display retains real-time native simulation on Via",
+    "return to lobby clears expanded layout and hides paused engine"
+  ],
+  "normal": {
+    "mode": "hd",
+    "frames": 59,
+    "changedPixels": 7736,
+    "width": 1011,
+    "height": 1302,
+    "engineWidth": 365,
+    "engineHeight": 470,
+    "sourceWidth": 1105,
+    "sourceHeight": 1423,
+    "composeMs": 0.3,
+    "cssWidth": 385.1428527832031,
+    "cssHeight": 496
+  },
+  "expanded": {
+    "mode": "hd",
+    "frames": 130,
+    "changedPixels": 7592,
+    "width": 1066,
+    "height": 1373,
+    "engineWidth": 365,
+    "engineHeight": 470,
+    "sourceWidth": 1105,
+    "sourceHeight": 1423,
+    "composeMs": 0.4,
+    "cssWidth": 406.0952453613281,
+    "cssHeight": 523.047607421875
+  },
+  "performance": {
+    "wallMs": 3061,
+    "nativeMs": 3048,
+    "composeMs": [
+      0.3,
+      0.3,
+      0.4,
+      0.6,
+      0.4,
+      0.3,
+      0.6,
+      0.3,
+      0.3,
+      0.3,
+      0.4,
+      0.3,
+      0.6,
+      0.4,
+      0.4,
+      0.5,
+      0.5,
+      0.5,
+      0.4,
+      0.3
+    ]
+  },
+  "errors": [],
+  "passed": true
+}

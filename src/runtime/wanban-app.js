@@ -5,7 +5,7 @@ import { createZumaGame } from '../games/zuma.js';
 import { createWaterSortGame } from '../games/water-sort.js';
 import { createFreeCellGame } from '../games/freecell.js';
 import { createSpaceCadetGame as createPinballGame, validCadetProgress } from '../games/space-cadet.js';
-import { createMatch3Game } from '../games/match3.js';
+import { createMatch3Game, validMatch3Progress } from '../games/match3.js';
 
 // Runtime migrated from 益智小游戏/玩伴小屋V1.0.1.json.
 // Keep this file behavior-compatible with the original script; split new code into src/* modules when extending.
@@ -297,9 +297,9 @@ export async function initWanbanXiaowu() {
     screw: '每局会选择普通模式或无尽模式，并保证每种颜色螺丝数量为3的倍数、工具盒数量正确。顶部同时出现3个随机颜色工具盒，点击可见螺丝后，同色螺丝进入对应工具盒；非当前盒颜色会进入5格临时托盘。任意工具盒收满3颗会自动打包并刷新下一个颜色。上层面板会遮挡下层螺丝；板件剩一个螺丝时会悬挂摆动，失去全部螺丝后受重力下落。普通模式清空全部面板即可过关，无尽模式会在快结束时续上下一批。',
     popstar: '10×10彩色星星棋盘。点击2个及以上上下左右相连的同色星星即可消除，得分为消除数量×消除数量×5，8/12/16个以上大块会有额外奖励。困难模式每关有步数限制，消除、打乱、单消都会消耗1步；简单模式没有步数限制，可以一直消到没有可消除组合。无可消除组合或困难模式步数用完时本关结算，剩余10个以内有少量奖励；如果无可消除组合且还剩步数，会按未用步数奖励。累计分数达到当前关目标就进入下一关，否则游戏结束。',
     paopao: '交错网格泡泡射击。按住或拖动瞄准，松开发射；泡泡会在左右墙反弹，撞到天花板或现有泡泡后吸附到最近空槽。3个及以上同色相连会消除，不再连着顶部的泡泡会掉落得分。初始每发射10次顶部压下一行，每下压3行后间隔减少1次，最低固定为5次；场上只剩5个以内会立刻补压一行。任意泡泡越过红色警戒线即结束。每局有5个炸弹，炸弹会消除落点周围3格泡泡。',
-    pinball: '完整 Space Cadet 球台：长按约3秒蓄力，松手发射；左右触控按钮或方向键控制挡板，空格发射。击中任务靶后上左侧坡道接受任务，利用虫洞、超空间和燃料通道得分晋级。连续震台会 TILT。三球用尽结算；同页返回可继续完整球局，刷新后只保留分数、常规球数和军衔，从新球开始。',
-    match3: '交换相邻两颗宝石，横竖连续3颗及以上同色宝石消除。无效交换不扣步数；消除后下落补齐并可连续连锁，4连5连有奖励。有限步数内达到目标分进入下一关，没有可用交换时自动重排。点击两颗宝石或滑动交换，提示按钮标出可行走法。',
-    freecell: '经典空当接龙：52张牌分为8列，4个空当可暂存单牌，4个收牌区按同花色A至K递增。列内按红黑交替递减，可移动长度受空当和空列限制。点击源牌再点击目标，使用提示或撤销；全部收齐获胜。',
+    pinball: '完整 Space Cadet 球台：长按约3秒蓄力，松手发射；左右触控按钮或方向键控制挡板，空格发射。击中任务靶后上左侧坡道接受任务，利用虫洞、超空间和燃料通道得分晋级。连续震台会 TILT。可放大画面、切换高清／经典显示。三球用尽结算；同页返回可继续完整球局，刷新后只保留分数、常规球数和军衔，从新球开始。',
+    match3: '经典闯关、破冰挑战、无限休闲三种玩法，切换时保存各自进度。交换三连，四连造清线、五连造彩虹、L/T造爆弹；特效互换可组合。过关获得本局星币，可用小锤和重排。失败可重试，返回或刷新保留本局奖励，结束或重开后清零。无效交换不扣步。',
+    freecell: '经典空当接龙：52张牌分为8列，4个空当可暂存单牌，4个收牌区按同花色A至K递增。列内按红黑交替递减，可移动长度受空当和空列限制。点击源牌再点击目标；桌面双击或手机快速双点露出的牌送入收牌区。安全归档按钮收取当前安全牌，随步归档开关在移动后连续收牌；撤销可恢复整步。全部收齐获胜。',
     zuma: '青蛙位于轨道中央，按住棋盘瞄准、拖动调整方向，松手后吐出彩珠；发射瞬间青蛙口中的珠子会立即切换为下一颗。整局只有一条持续运动的珠链，没有关卡或轮次；入口会按珠链前进距离持续补入新珠子，累计生成后颜色从4种逐步增加到最多6种。彩珠撞到珠链后会插入，连续3颗及以上同色珠会先膨胀爆裂并淡出，随后前方珠链平滑回退；回退接合后如果再次凑成同色三消，会继续播放爆裂和回退连锁。清空整条珠链奖励600分，之后仍会继续生成新珠子，只有珠链进入终点洞口才结束。珠链较短时会适当减速；速度也会按每450分、累计消除22颗以及当前超过24颗的珠链数量继续提升，最高84。下方炸弹可炸掉命中点附近5颗珠，减速可让珠链减速8秒，彩虹珠会变成命中珠子的颜色。',
     watersort: '点击一个非空瓶子，再点击目标瓶子，将源瓶顶部连续同色的水一次倒入目标瓶。目标瓶必须为空，或顶部颜色相同，并且仍有容量；每瓶最多4层。所有非空瓶都装满4层同色水即可进入下一关，关卡无限生成。颜色会从3种逐步增加到最多10种，第9关起初始空瓶由2只减为1只，反向打乱深度也会逐步提高并继续验证解序列。撤回会逐关补充，提示每2关补充，额外空瓶每5关补充；可随时点击结算结束本局。',
     game1010: '10×10方块拼图。拖动底部3个候补方块放入棋盘，方块不可旋转；任意行或列填满会同时消除且不会下落。3个方块全部放完后刷新新一批。每局有3次重新生成和3次小锤子，死局且道具耗尽时结束。',
@@ -988,7 +988,7 @@ export async function initWanbanXiaowu() {
     if (game === 'popstar') return !!state.score || Number(state.level || 1) > 1 || !!(state.board && state.board.some(row => row && row.some(Boolean)));
     if (game === 'paopao') return !!state.score || !!state.shots || !!(state.bubbles && state.bubbles.length); 
     if (game === 'pinball') return validCadetProgress(state);
-    if (game === 'match3') return !!(state.board && state.board.length === 8 && state.board.every(row => Array.isArray(row) && row.length === 8) && state.moves > 0);
+    if (game === 'match3') return validMatch3Progress(state);
     if (game === 'freecell') return !!(state.columns && state.columns.length === 8);
     if (game === 'zuma') return !!state.score || !!(state.details && (state.details.shots || state.details.totalBallsGenerated)) || !!(state.chain && state.chain.length);
     if (game === 'watersort') return !!state.score || Number(state.level || 1) > 1 || !!state.moves || !!(state.bottles && state.bottles.length);

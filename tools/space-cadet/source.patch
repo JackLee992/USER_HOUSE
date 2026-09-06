@@ -78,10 +78,10 @@ index 0c2b5f5..a5e734c 100644
  	rect.Width = bmp->Width;
 diff --git a/SpaceCadetPinball/cadet_bridge.cpp b/SpaceCadetPinball/cadet_bridge.cpp
 new file mode 100644
-index 0000000..f66dd11
+index 0000000..bbdd1f9
 --- /dev/null
 +++ b/SpaceCadetPinball/cadet_bridge.cpp
-@@ -0,0 +1,207 @@
+@@ -0,0 +1,222 @@
 +// USER_HOUSE browser integration. MIT, same terms as the engine.
 +#include "pch.h"
 +#include "pb.h"
@@ -99,6 +99,7 @@ index 0000000..f66dd11
 +#include "TPlunger.h"
 +#include "TFlipper.h"
 +#include "TFlipperEdge.h"
++#include "loader.h"
 +#include <emscripten.h>
 +#include <sstream>
 +#include <cmath>
@@ -113,6 +114,7 @@ index 0000000..f66dd11
 +double remainderMs = 0;
 +unsigned long ticks = 0;
 +std::string snapshot;
++gdrv_bitmap8* presentationBackground = nullptr;
 +int keyFor(int action) {
 +    switch (action) {
 +    case 0: return options::Options.LeftFlipperKey;
@@ -164,6 +166,16 @@ index 0000000..f66dd11
 +    SDL_RenderClear(winmain::Renderer);
 +    render::PresentVScreen();
 +    SDL_RenderPresent(winmain::Renderer);
++    // Give the host the exact final, depth-tested pixels plus the static table.
++    // The display layer may substitute high-resolution art only where the
++    // native frame equals that static table. Physics and occlusion stay native.
++    if (presentationBackground) {
++        EM_ASM({
++            if (Module['cadetPresent']) Module['cadetPresent']($0,$1,$2,$3,$4,$5,$6,$7);
++        }, render::vscreen.BmpBufPtr1, render::vscreen.Stride,
++           presentationBackground->BmpBufPtr1, presentationBackground->Stride,
++           pb::MainTable->Width, pb::MainTable->Height, render::presentation_offset_x(), render::presentation_offset_y());
++    }
 +    if(requestedPause && loopRegistered && !loopSleeping) {
 +        emscripten_pause_main_loop();
 +        loopSleeping=true;
@@ -279,6 +291,9 @@ index 0000000..f66dd11
 +}
 +
 +void cadet_start_web_loop() {
++    visualStruct tableVisual{};
++    loader::query_visual(loader::query_handle("table"), 0, &tableVisual);
++    presentationBackground = tableVisual.Bitmap;
 +    SDL_SetWindowSize(winmain::MainWindow, pb::MainTable->Width, pb::MainTable->Height);
 +    EM_ASM({Module.canvas.width=$0; Module.canvas.height=$1;}, pb::MainTable->Width, pb::MainTable->Height);
 +    options::Options.Players = 1;
@@ -321,6 +336,19 @@ index b5f2e88..d06cb32 100644
 +    SDL_RenderCopy(winmain::Renderer, vScreenTex, nullptr, &DestinationRect);
 +#endif
  }
+diff --git a/SpaceCadetPinball/render.h b/SpaceCadetPinball/render.h
+index 832e604..d5d31df 100644
+--- a/SpaceCadetPinball/render.h
++++ b/SpaceCadetPinball/render.h
+@@ -31,6 +31,8 @@ struct render_sprite_type_struct
+ class render
+ {
+ public:
++    static int presentation_offset_x() { return offset_x; }
++    static int presentation_offset_y() { return offset_y; }
+ 	static gdrv_bitmap8 vscreen, *background_bitmap;
+ 	static SDL_Rect DestinationRect;
+ 
 diff --git a/SpaceCadetPinball/winmain.cpp b/SpaceCadetPinball/winmain.cpp
 index 4f78055..c3ab154 100644
 --- a/SpaceCadetPinball/winmain.cpp

@@ -46,22 +46,29 @@ function styles(doc) {
   if (doc.getElementById('wb-cadet-css')) return;
   const style = doc.createElement('style'); style.id = 'wb-cadet-css';
   style.textContent = `
-.wb-cadet{height:100%;min-height:0;display:flex;flex-direction:column;gap:7px;padding:8px;box-sizing:border-box;color:#e9e9ec;background:linear-gradient(#161922,#090a10);overflow:hidden}
+.wb-cadet{width:100%;height:100%;min-width:0;min-height:0;display:flex;flex-direction:column;gap:4px;padding:3px;box-sizing:border-box;color:#e9e9ec;background:linear-gradient(#161922,#090a10);overflow:hidden}
 .wb-cadet .cd-hud{display:flex;align-items:center;justify-content:space-between;gap:6px;font:12px ui-monospace,monospace;color:#ffe5a1;flex:none}
 .wb-cadet .cd-score{font-size:18px;color:#fff4cb;font-weight:800}
 .wb-cadet .cd-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;overflow:hidden}
 .wb-cadet .cd-loading{text-align:center;color:#b8becd;max-width:260px;font-size:13px;line-height:1.7}
-.wb-cadet .cd-mission{flex:none;min-height:42px;max-height:72px;overflow:auto;padding:6px 10px;border:1px solid #626c87;background:#070a15;box-shadow:inset 0 0 14px #122c4c;font:12px/1.5 ui-monospace,monospace;text-align:center;color:#86eff4;white-space:pre-line}
+.wb-cadet .cd-mission{flex:none;min-height:32px;max-height:52px;overflow:auto;padding:3px 6px;border:1px solid #626c87;background:#070a15;box-shadow:inset 0 0 14px #122c4c;font:11px/1.4 ui-monospace,monospace;text-align:center;color:#86eff4;white-space:pre-line}
 .wb-cadet .cd-info{color:#ffce72;font-size:11px}
 .wb-cadet .cd-controls{display:flex;gap:8px;flex:none}
 .wb-cadet button{color:#faf6e7;border:1px solid #a79d9c;background:linear-gradient(#484454,#252332);border-radius:6px;font-family:inherit;font-size:13px;font-weight:700;line-height:1.3;min-height:44px;cursor:pointer;touch-action:none;user-select:none}
 .wb-cadet .cd-controls button{flex:1}.wb-cadet .cd-controls button[data-action=launch]{background:linear-gradient(#755336,#342823);border-color:#c4a276}
 .wb-cadet button:active,.wb-cadet .cd-held{background:#664957;box-shadow:inset 0 0 12px #fc85ab80}
-.wb-cadet .cd-tools{display:flex;gap:6px;align-items:center;flex:none}.wb-cadet .cd-tools button{font-size:11px;min-height:28px;padding:3px 8px}.wb-cadet .cd-help{font-size:10px;line-height:1.5;color:#aeb4c3;flex:1;text-align:center}
+.wb-cadet .cd-tools{display:flex;gap:4px;align-items:center;flex:none}.wb-cadet .cd-tools button{flex:1;font-size:11px;min-height:32px;padding:3px 4px}.wb-cadet .cd-help{font-size:11px;line-height:1.5;color:#aeb4c3}
 .wb-cadet .cd-options{padding:8px;border:1px solid #a89da4;background:#1c1c29;font-size:12px;line-height:1.6;flex:none}.wb-cadet .cd-options[hidden]{display:none}.wb-cadet .cd-options button{min-height:32px;font-size:12px;margin:4px}
 .wb-cadet-cover{position:absolute;z-index:7;display:grid;place-items:center;background:#0008;color:white;font:bold 36px system-ui;pointer-events:none;visibility:hidden;text-shadow:0 2px 8px #000}
 .wb-cadet-frame{position:absolute;z-index:5;display:block;border:0;background:#020306;pointer-events:none;visibility:hidden}
-@media(max-height:650px){.wb-cadet{gap:4px;padding:5px}.wb-cadet .cd-mission{min-height:28px;font-size:10px;padding:3px}.wb-cadet .cd-help{display:none}.wb-cadet .cd-controls button{min-height:38px}}
+#wanbanXiaowu-popup.wb-cadet-session .wb-board-wrap{padding:0;border:0}
+#wanbanXiaowu-popup.wb-cadet-expanded{inset:0!important;max-width:100%!important;max-height:none!important;height:var(--wb-vvh,100dvh)!important;min-height:0!important;border:0!important}
+#wanbanXiaowu-popup.wb-cadet-expanded .wb-head,#wanbanXiaowu-popup.wb-cadet-expanded .wb-side-companion{display:none!important}
+#wanbanXiaowu-popup.wb-cadet-expanded .wb-body.wb-game-mode{padding:0!important}
+#wanbanXiaowu-popup.wb-cadet-expanded .wb-layout{display:flex!important;gap:0}
+#wanbanXiaowu-popup.wb-cadet-expanded .wb-game-main{display:flex!important;flex:1;min-width:0;padding:0!important;max-height:none!important;border:0}
+#wanbanXiaowu-popup.wb-cadet-expanded .wb-toolbar{margin-bottom:0}
+@media(max-height:650px){.wb-cadet{gap:3px;padding:2px}.wb-cadet .cd-mission{min-height:28px;font-size:10px;padding:2px}}
 `;
   doc.head.appendChild(style);
 }
@@ -75,9 +82,10 @@ export function createSpaceCadetGame(env, saved) {
   const checkpoint = cadetCheckpoint(saved);
   const canReuse = entry?.iframe.isConnected && entry.ready && entry.id === saved?.sessionId && checkpoint;
   if (!canReuse && entry) { entry.iframe.remove(); entry.cover?.remove(); entry = null; }
-  root.innerHTML = `<div class="wb-cadet"><div class="cd-hud"><span>SPACE CADET<br><b class="cd-score">0</b></span><span class="cd-rank">学员</span><span class="cd-lives">3 球</span></div><div class="cd-stage"><div class="cd-loading">正在装载完整球台…</div></div><div class="cd-mission"><div class="cd-task">击中任务靶选择任务，再上发射坡道接受</div><div class="cd-info">SPACE CADET</div></div><div class="cd-controls"><button type="button" data-action="left" aria-label="左挡板">◀ 左挡板</button><button type="button" data-action="launch">长按蓄力</button><button type="button" data-action="right" aria-label="右挡板">右挡板 ▶</button></div><div class="cd-tools"><button type="button" data-action="nudge" aria-label="向上震台">震台</button><span class="cd-help">长按约 3 秒松手发射 · 方向键挡板 · 连震会 TILT</span><button type="button" class="cd-sound">音效 开</button><button type="button" class="cd-assets">素材</button></div><div class="cd-options" hidden>内置完整球台与重绘素材。也可从本机选择原版 PINBALL.DAT／CADET.DAT 和 sound*.wav；素材仅保存在当前浏览器。更换素材会开始新局。<div><button class="cd-import">选择原版素材</button><button class="cd-default">使用内置重绘</button></div><input class="cd-files" type="file" accept=".dat,.wav" multiple hidden></div></div>`;
+  root.innerHTML = `<div class="wb-cadet"><div class="cd-hud"><span><b class="cd-score">0</b></span><span class="cd-rank">学员</span><span class="cd-lives">3 球</span></div><div class="cd-stage"><div class="cd-loading">正在装载完整球台…</div></div><div class="cd-mission"><div class="cd-task">击中任务靶选择任务，再上发射坡道接受</div><div class="cd-info">SPACE CADET</div></div><div class="cd-controls"><button type="button" data-action="left" aria-label="左挡板">◀ 左挡板</button><button type="button" data-action="launch">长按蓄力</button><button type="button" data-action="right" aria-label="右挡板">右挡板 ▶</button></div><div class="cd-tools"><button type="button" data-action="nudge" aria-label="向上震台">震台</button><button type="button" class="cd-expand" aria-pressed="false">放大画面</button><button type="button" class="cd-quality">高清 开</button><button type="button" class="cd-sound">音效 开</button><button type="button" class="cd-assets">设置</button></div><div class="cd-options" hidden><div class="cd-help">长按约 3 秒松手发射 · 方向键控制挡板 · 连续震台会 TILT。高清模式保留原引擎球与机关，以高清重绘球台显示；关闭后使用经典画面。</div>内置完整球台与重绘素材。也可从本机选择原版 PINBALL.DAT／CADET.DAT 和 sound*.wav；素材仅保存在当前浏览器。更换素材会开始新局。<div><button class="cd-import">选择原版素材</button><button class="cd-default">使用内置重绘</button></div><input class="cd-files" type="file" accept=".dat,.wav" multiple hidden></div></div>`;
   const stage = root.querySelector('.cd-stage'), loading = root.querySelector('.cd-loading');
   const container = root.closest('#wanbanXiaowu-popup') || doc.body;
+  container.classList.add('wb-cadet-session');
   if (!entry) {
     const id = `cadet-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
     const iframe = doc.createElement('iframe'); iframe.className = 'wb-cadet-frame'; iframe.title = 'Space Cadet 完整球台'; iframe.allow = 'autoplay';
@@ -132,7 +140,7 @@ export function createSpaceCadetGame(env, saved) {
     env.setScore(s.score || 0);
     layout();
     if (s.gameover && !finished) {
-      finished = true; win.clearInterval(poll); release(); api()?.pause(true); entry.iframe.style.visibility = 'hidden'; entry.cover.style.visibility = 'hidden'; env.clear();
+      finished = true; container.classList.remove('wb-cadet-session','wb-cadet-expanded'); win.clearInterval(poll); release(); api()?.pause(true); entry.iframe.style.visibility = 'hidden'; entry.cover.style.visibility = 'hidden'; env.clear();
       env.finish('弹球结束',`Space Cadet · 本局 ${s.score} 分`,{outcome:'score',score:s.score},{score:s.score,details:{rank:s.rank,classic:true}});
     } else if (Date.now()-lastSave > 1500) { save(); lastSave = Date.now(); }
   }
@@ -143,7 +151,10 @@ export function createSpaceCadetGame(env, saved) {
     if (m.type === 'boot') { await loadingResources; if (!destroyed) post('initialize',{files:entry.files || [],checkpoint,muted}); }
     if (m.type === 'snapshot' && !changingResources) entry.state = m.state;
     if (m.type === 'ready') {
-      entry.ready = true; paused = true; update();
+      api()?.quality(entry.quality || 'hd');
+      entry.ready = true; quality.disabled = !!entry.files?.length;
+      if (quality.disabled) quality.textContent = '原版素材';
+      paused = true; update();
       if (checkpoint && !canReuse) env.toast('已恢复分数、球数和军衔，从新球继续。');
     }
     if (m.type === 'error') { errorText = `球台加载失败：${m.message}`; loading.hidden = false; loading.textContent = errorText; }
@@ -166,6 +177,17 @@ export function createSpaceCadetGame(env, saved) {
   const sound = root.querySelector('.cd-sound');
   sound.textContent = `音效 ${muted ? '关' : '开'}`;
   on(sound,'click',() => { muted = !muted; entry.muted = muted; api()?.mute(muted); sound.textContent = `音效 ${muted ? '关' : '开'}`; });
+  const expand = root.querySelector('.cd-expand'), quality = root.querySelector('.cd-quality');
+  quality.disabled = !!entry.files?.length;
+  quality.textContent = quality.disabled ? '原版素材' : entry.quality === 'classic' ? '高清 关' : '高清 开';
+  on(expand,'click',() => {
+    release(); const expanded = container.classList.toggle('wb-cadet-expanded');
+    expand.textContent = expanded ? '还原画面' : '放大画面'; expand.setAttribute('aria-pressed',String(expanded)); layout();
+  });
+  on(quality,'click',() => {
+    entry.quality = entry.quality === 'classic' ? 'hd' : 'classic';
+    api()?.quality(entry.quality); quality.textContent = entry.quality === 'classic' ? '高清 关' : '高清 开';
+  });
   const options = root.querySelector('.cd-options'), filesInput = root.querySelector('.cd-files');
   on(root.querySelector('.cd-assets'),'click',() => { options.hidden = !options.hidden; layout(); });
   on(root.querySelector('.cd-import'),'click',() => filesInput.click());
@@ -190,7 +212,7 @@ export function createSpaceCadetGame(env, saved) {
   });
   on(root.querySelector('.cd-default'),'click',() => changeResources(null));
   if (!canReuse) {
-    entry.iframe.src = `${ENGINE_URL.href}?session=${encodeURIComponent(entry.id)}`;
+    entry.iframe.src = `${ENGINE_URL.href}?v=3.10.0&session=${encodeURIComponent(entry.id)}`;
     container.append(entry.iframe,entry.cover);
   } else { paused = true; api()?.pause(true); update(); }
   poll = win.setInterval(update,100);
@@ -200,7 +222,7 @@ export function createSpaceCadetGame(env, saved) {
     destroy() {
       if (destroyed) return;
       release(); api()?.pause(true); entry.state = api()?.snapshot() || entry.state; entry.iframe.style.visibility = 'hidden'; entry.cover.style.visibility = 'hidden';
-      destroyed = true; win.clearInterval(poll); observer?.disconnect(); ownedListeners.forEach(fn => fn());
+      destroyed = true; container.classList.remove('wb-cadet-session','wb-cadet-expanded'); win.clearInterval(poll); observer?.disconnect(); ownedListeners.forEach(fn => fn());
     },
   };
 }
